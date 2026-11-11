@@ -3,7 +3,7 @@
   "outputDirectory": "dist",
   "framework": "astro",
   "functions": {
-    "src/scripts/vercel-form.ts": {
+    "api/contact.ts": {
       "maxDuration": 10
     }
   }
