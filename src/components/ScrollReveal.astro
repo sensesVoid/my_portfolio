@@ -1,0 +1,17 @@
+---
+interface Props {
+  children: any;
+  delay?: number;
+  once?: boolean;
+  class?: string;
+}
+const { children, delay = 0, once = true, class: className = '' } = Astro.props;
+const delayClass = delay > 0 ? `reveal-delay-${Math.min(delay, 4)}` : '';
+---
+<script>
+  // Register for IntersectionObserver
+  document.documentElement.classList.add('has-js');
+</script>
+<div class={`reveal ${delayClass} ${className}`} data-scroll-reveal data-reveal-once={once}>
+  <slot />
+</div>
