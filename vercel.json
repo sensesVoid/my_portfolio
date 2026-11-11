@@ -6,5 +6,8 @@
     "api/contact.ts": {
       "maxDuration": 10
     }
-  }
+  },
+  "rewrites": [
+    { "source": "/api/chat", "destination": "https://gerald-aton-portfolio-chatbot.originragnarok05.workers.dev/api/chat" }
+  ]
 }
