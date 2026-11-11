@@ -1,4 +1,5 @@
 ---
+import ScrollReveal from '@/components/ScrollReveal.astro';
 import Badge from '@/components/Badge.astro';
 interface Props {
   headline: string;
@@ -8,23 +9,36 @@ interface Props {
   badge?: string;
 }
 const { headline, subhead, ctaPrimary, ctaSecondary, badge } = Astro.props;
+// Split headline for gradient accent words (marked with ** in content)
+const headlineParts = headline.split('**').map((part, i) => ({ text: part, isAccent: i % 2 === 1 }));
 ---
-<section class="section pt-20 lg:pt-28" aria-labelledby="hero-heading">
+<section class="section pt-20 lg:pt-28 relative overflow-hidden" aria-labelledby="hero-heading">
   <div class="container-custom">
-    <div class="max-w-3xl">
-      {badge && <Badge variant="available" class="mb-6">{badge}</Badge>}
-      <h1 id="hero-heading" class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-brand-text mb-6">
-        {headline}
+    <div class="max-w-3xl relative z-10">
+      {badge && (
+        <ScrollReveal delay={0} class="mb-6 inline-block">
+          <span class="badge badge-available px-4 py-1.5 text-sm">{badge}</span>
+        </ScrollReveal>
+      )}
+      <h1 id="hero-heading" class="font-display text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight text-brand-text mb-6 leading-[1.1]">
+        {headlineParts.map((part, i) => (
+          <ScrollReveal key={i} delay={1} class="inline-block">
+            {part.isAccent ? <span class="text-gradient">{part.text}</span> : part.text}
+          </ScrollReveal>
+        ))}
       </h1>
-      <p class="text-lg sm:text-xl text-brand-muted mb-8 max-w-2xl leading-relaxed">
-        {subhead}
-      </p>
-      <div class="flex flex-col sm:flex-row gap-4">
-        <a href={ctaPrimary.href} class="btn-primary w-full sm:w-auto">{ctaPrimary.text}</a>
+      <ScrollReveal delay={2} class="mb-8">
+        <p class="text-lg sm:text-xl text-brand-muted max-w-2xl leading-relaxed">{subhead}</p>
+      </ScrollReveal>
+      <ScrollReveal delay={3} class="flex flex-col sm:flex-row gap-4">
+        <a href={ctaPrimary.href} class="btn-primary btn-shine w-full sm:w-auto relative overflow-hidden">
+          <span class="relative z-10">{ctaPrimary.text}</span>
+          <span class="absolute inset-0 bg-brand-accent-hover opacity-0 hover:opacity-100 transition-opacity duration-300" aria-hidden="true" />
+        </a>
         {ctaSecondary && (
-          <a href={ctaSecondary.href} class="btn-secondary w-full sm:w-auto">{ctaSecondary.text}</a>
+          <a href={ctaSecondary.href} class="btn-secondary w-full sm:w-auto"> {ctaSecondary.text} </a>
         )}
-      </div>
+      </ScrollReveal>
     </div>
   </div>
 </section>
