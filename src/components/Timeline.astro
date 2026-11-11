@@ -1,0 +1,35 @@
+---
+interface TimelineItem {
+  period: string;
+  role: string;
+  company: string;
+  highlights: string[];
+}
+interface Props {
+  items: TimelineItem[];
+  title: string;
+}
+const { items, title } = Astro.props;
+---
+<section aria-labelledby={title.toLowerCase().replace(/\s+/g, '-')}>
+  <h2 id={title.toLowerCase().replace(/\s+/g, '-')} class="text-2xl font-bold text-brand-text mb-8">{title}</h2>
+  <dl class="space-y-8">
+    {items.map((item, i) => (
+      <div key={i} class="relative pl-6 border-l-2 border-brand-border">
+        <dt class="flex items-baseline gap-3 mb-2">
+          <span class="text-lg font-semibold text-brand-text">{item.role}</span>
+          <span class="text-brand-muted text-sm">{item.period}</span>
+        </dt>
+        <dd class="text-brand-accent font-medium mb-2">{item.company}</dd>
+        <dd class="space-y-1">
+          {item.highlights.map((h, j) => (
+            <p key={j} class="text-brand-muted text-sm flex items-start gap-2">
+              <span class="w-1.5 h-1.5 rounded-full bg-brand-accent mt-1.5 flex-shrink-0" aria-hidden="true" />
+              {h}
+            </p>
+          ))}
+        </dd>
+      </div>
+    ))}
+  </dl>
+</section>

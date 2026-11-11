@@ -1,0 +1,24 @@
+---
+import Badge from '@/components/Badge.astro';
+interface Props {
+  title: string;
+  subtitle: string;
+  badges: string[];
+  links: { text: string; href: string }[];
+  stack: string[];
+}
+const { title, subtitle, badges, links, stack } = Astro.props;
+---
+<header class="mb-12">
+  <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-brand-text mb-4">{title}</h1>
+  <p class="text-lg text-brand-muted mb-6 max-w-3xl">{subtitle}</p>
+  <div class="flex flex-wrap gap-2 mb-6">
+    {badges.map(b => <Badge key={b} variant="accent">{b}</Badge>)}
+  </div>
+  <div class="flex flex-wrap gap-4 mb-6">
+    {links.map(l => <a key={l.href} href={l.href} class="btn-secondary text-sm" target="_blank" rel="noopener noreferrer">{l.text}</a>)}
+  </div>
+  <div class="flex flex-wrap gap-2 text-xs text-brand-muted">
+    {stack.map(tech => <span key={tech} class="px-2 py-0.5 rounded bg-brand-border">{tech}</span>)}
+  </div>
+</header>

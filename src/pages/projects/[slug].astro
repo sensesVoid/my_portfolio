@@ -1,0 +1,115 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ProjectHero from '@/components/ProjectHero.astro';
+import { getCollection, getEntry } from 'astro:content';
+import { Slug } from 'astro:content';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map(p => ({ params: { slug: p.slug }, props: { project: p } }));
+}
+
+const { project } = Astro.props;
+const { data } = project;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareProject',
+  name: data.title,
+  description: data.description,
+  url: `https://myportfolio-theta-plum-30.vercel.app/projects/${project.slug}`,
+  programmingLanguage: data.stack,
+  codeRepository: data.github,
+  dateCreated: data.startDate,
+  keywords: data.tags.join(', '),
+};
+---
+
+<BaseLayout title={`${data.title} — Gerald B. Aton`} description={data.description} jsonLd={jsonLd}>
+  <section class="section pt-20" aria-labelledby="project-title">
+    <div class="container-custom max-w-4xl">
+      <ProjectHero {...data.hero} stack={data.stack} />
+      
+      <div class="prose prose-invert max-w-none" set:html={data.content || ''} />
+      
+      {/* SQAC-specific deep-dive content */}
+      {project.slug === 'sqac' && (
+        <>
+          <hr class="my-12 border-brand-border" />
+          
+          <section aria-labelledby="problem-heading">
+            <h2 id="problem-heading" class="text-2xl font-bold text-brand-text mb-4">The Problem</h2>
+            <p class="text-brand-muted mb-4">Every token you put into an LLM's context costs GPU memory. A 1M-token conversation with Llama-3.1-8B needs ~125,000 MiB of KV cache. Stuffing your entire memory into the context window is the "5M-token fantasy."</p>
+            <p class="text-brand-muted mb-4">SQAC recalls only the top-k relevant exchanges (~135 tokens) at ~0.1ms, reducing KV cache to ~16.9 MiB — a <strong class="text-brand-accent">1,000× (99.9%) reduction</strong>. Your memory stays constant-cost regardless of how much you've stored.</p>
+          </section>
+
+          <section aria-labelledby="concepts-heading" class="mt-12">
+            <h2 id="concepts-heading" class="text-2xl font-bold text-brand-text mb-4">Core Concepts</h2>
+            <div class="grid md:grid-cols-2 gap-6">
+              <article class="card">
+                <h3 class="text-lg font-semibold text-brand-text mb-2">🗂️ Cartridge</h3>
+                <p class="text-brand-muted">Single .sqac file, plaintext payloads, binary 1024-bit hyperdimensional addresses (XOR + popcount), zero training, hot-swappable.</p>
+              </article>
+              <article class="card">
+                <h3 class="text-lg font-semibold text-brand-text mb-2">🧠 Four Knowledge Kinds</h3>
+                <p class="text-brand-muted">Facts (what to know), Skills (how to think), Docs (reference), Turns (conversation memory).</p>
+              </article>
+              <article class="card">
+                <h3 class="text-lg font-semibold text-brand-text mb-2">🔍 Three-Tier Retrieval</h3>
+                <p class="text-brand-muted">Exact (5μs), Lexical (trigram, 21ms @ 10K), Semantic (paraphrase, ~0.1ms via int8 model).</p>
+              </article>
+              <article class="card">
+                <h3 class="text-lg font-semibold text-brand-text mb-2">⚡ Thought Injection</h3>
+                <p class="text-brand-muted">Skill cards with pinned operators → external evaluation → <strong class="text-brand-accent">57% → 95% accuracy</strong> on unit conversion (7B model).</p>
+              </article>
+            </div>
+          </section>
+
+          <section aria-labelledby="results-heading" class="mt-12">
+            <h2 id="results-heading" class="text-2xl font-bold text-brand-text mb-4">Key Results</h2>
+            <ul class="space-y-3 text-brand-muted">
+              <li>✅ 307/307 tests passing</li>
+              <li>⚡ 261× faster fuzzy search via Rust SIMD (AVX2/NEON)</li>
+              <li>📦 25K entries = 13ms search, 132MB RSS, 12MB disk</li>
+              <li>🔌 MCP server for cross-CLI continuity (OpenCode, Claude Code, Codex, Cursor, Zed)</li>
+              <li>🌐 HTTP API server (FastAPI) with auth, rack management, session offloader</li>
+              <li>🎮 3D hyperdimensional graph visualization (Three.js)</li>
+            </ul>
+          </section>
+
+          <section aria-labelledby="try-heading" class="mt-12">
+            <h2 id="try-heading" class="text-2xl font-bold text-brand-text mb-4">Try It Yourself</h2>
+            <p class="text-brand-muted mb-4">SQAC runs as an MCP server — connect it to Claude Code, OpenCode, Cursor, Zed, or any MCP-compatible client for cross-session memory that follows you across tools.</p>
+            <pre class="bg-brand-bg border border-brand-border rounded-xl p-4 overflow-x-auto text-sm"><code>{`# Install
+pip install sqac                    # core: numpy only
+pip install sqac[mcp]               # + MCP server for Claude Code, OpenCode, etc.
+pip install sqac[server]            # + HTTP API server
+pip install sqac[simd]              # + Rust SIMD (261x faster fuzzy search)
+pip install sqac[all]               # everything
+
+# Auto-build memory from your project
+sqac init .
+
+# Search your knowledge
+sqac search "deployment target"
+
+# Track changes in real-time
+sqac track . --interval 5 --rack .rack`}</code></pre>
+          </section>
+
+          <section aria-labelledby="license-heading" class="mt-12">
+            <h2 id="license-heading" class="text-2xl font-bold text-brand-text mb-4">License</h2>
+            <p class="text-brand-muted">BSL-1.1 → Apache 2.0 after Sep 7, 2030</p>
+          </section>
+        </>
+      )}
+      
+      {/* Pyralis/Wizky generic content */}
+      {project.slug !== 'sqac' && (
+        <div class="mt-8">
+          <p class="text-brand-muted">This project is part of my AI development portfolio. View all public work at <a href="https://github.com/sensesVoid" class="link">github.com/sensesVoid</a>.</p>
+        </div>
+      )}
+    </div>
+  </section>
+</BaseLayout>

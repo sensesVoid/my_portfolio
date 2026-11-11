@@ -1,0 +1,31 @@
+---
+import SEO from '@/components/SEO.astro';
+import ThemeScript from '@/components/ThemeScript.astro';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  url?: string;
+  jsonLd?: Record<string, unknown>;
+}
+const { title, description, image, url, jsonLd } = Astro.props;
+---
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    <SEO title={title} description={description} image={image} url={url} jsonLd={jsonLd} />
+    <ThemeScript />
+  </head>
+  <body class="min-h-screen flex flex-col">
+    <Header />
+    <main class="flex-1" id="main-content">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

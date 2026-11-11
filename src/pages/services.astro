@@ -1,0 +1,120 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Hero from '@/components/Hero.astro';
+import { getEntry } from 'astro:content';
+import Badge from '@/components/Badge.astro';
+
+const page = await getEntry('pages', 'services');
+
+const services = [
+  {
+    title: 'Trust & Safety Foundations',
+    target: 'Pre-seed → Series A',
+    scope: 'Policy framework design, moderation workflow setup, reviewer QA calibration, escalation paths, tooling selection',
+    outcomes: 'Launch-ready T&S ops in 4-6 weeks; measurable quality baseline',
+    icon: '🛡️',
+  },
+  {
+    title: 'Support Operations & QA',
+    target: 'Seed → Series B',
+    scope: 'Queue design, SLA/SLO definition, QA scorecards, coaching programs, productivity tooling, fintech/telecom domain expertise',
+    outcomes: '15-30% TPH improvement; CSAT >90%; reduced escalation rate',
+    icon: '📞',
+  },
+  {
+    title: 'AI Automation & Tooling',
+    target: 'Any stage',
+    scope: 'Custom agent workflows (OpenCode, Claude Code, Hermes), SQAC memory integration, local LLM deployment (llama.cpp/GGUF), RAG vs. memory architecture decisions',
+    outcomes: '50-90% context cost reduction; portable knowledge across models',
+    icon: '🤖',
+  },
+  {
+    title: 'Fractional QA Lead',
+    target: 'Early-stage',
+    scope: 'Embedded QA leadership: hiring, calibration, process design, tooling, reporting',
+    outcomes: 'Self-sustaining QA function; knowledge transfer to internal hire',
+    icon: '👥',
+  },
+];
+
+const engagementModels = [
+  { name: 'Discovery', description: 'Free 30-min call to understand your needs and scope the engagement', price: 'Free' },
+  { name: 'Project', description: 'Fixed-scope engagement, typically 4-8 weeks with clear deliverables', price: 'Fixed fee' },
+  { name: 'Retainer', description: 'Ongoing monthly engagement for continuous improvement and advisory', price: 'Monthly' },
+];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'Trust & Safety Consulting',
+  provider: { '@type': 'Person', name: 'Gerald B. Aton' },
+  areaServed: 'Worldwide',
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Consulting Services',
+    itemListElement: services.map((s, i) => ({
+      '@type': 'Offer',
+      position: i + 1,
+      itemOffered: { '@type': 'Service', name: s.title, description: s.scope },
+    })),
+  },
+};
+---
+
+<BaseLayout title={page.data.title} description={page.data.description} jsonLd={jsonLd}>
+  <Hero {...page.data.hero} />
+
+  <section class="section" aria-labelledby="services-heading">
+    <div class="container-custom">
+      <header class="mb-12 text-center">
+        <h2 id="services-heading" class="text-2xl sm:text-3xl font-bold text-brand-text mb-2">Consulting Services</h2>
+        <p class="text-brand-muted max-w-2xl mx-auto">Each engagement starts with a free discovery call. No rate card — we agree on scope and value first.</p>
+      </header>
+      <div class="space-y-8">
+        {services.map((svc, i) => (
+          <article key={svc.title} class="card relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-1 h-full bg-brand-accent" aria-hidden="true" />
+            <div class="grid md:grid-cols-[1fr_2fr_2fr_1fr] gap-6 items-start p-6">
+              <div class="flex flex-col items-center md:items-start text-center md:text-left">
+                <span class="text-4xl mb-3" aria-hidden="true">{svc.icon}</span>
+                <Badge variant="accent" class="mb-3">{svc.target}</Badge>
+                <h3 class="text-xl font-semibold text-brand-text">{svc.title}</h3>
+              </div>
+              <div>
+                <h4 class="text-sm font-medium text-brand-accent uppercase tracking-wider mb-2">Scope</h4>
+                <p class="text-brand-muted">{svc.scope}</p>
+              </div>
+              <div>
+                <h4 class="text-sm font-medium text-brand-accent uppercase tracking-wider mb-2">Outcomes</h4>
+                <p class="text-brand-text">{svc.outcomes}</p>
+              </div>
+              <div class="flex items-center justify-center md:justify-end">
+                <a href="/contact" class="btn-primary">Discuss This →</a>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-brand-elevated/50" aria-labelledby="engagement-heading">
+    <div class="container-custom">
+      <header class="mb-10 text-center">
+        <h2 id="engagement-heading" class="text-2xl sm:text-3xl font-bold text-brand-text mb-2">Engagement Models</h2>
+      </header>
+      <div class="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+        {engagementModels.map(model => (
+          <article key={model.name} class="card text-center">
+            <h3 class="text-xl font-semibold text-brand-text mb-2">{model.name}</h3>
+            <p class="text-brand-muted mb-4">{model.description}</p>
+            <div class="text-2xl font-bold text-brand-accent">{model.price}</div>
+          </article>
+        ))}
+      </div>
+      <div class="text-center mt-10">
+        <a href="/contact" class="btn-primary">Start with a Discovery Call →</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

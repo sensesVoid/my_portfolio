@@ -1,0 +1,29 @@
+---
+import Badge from '@/components/Badge.astro';
+interface Props {
+  title: string;
+  description: string;
+  stack: string[];
+  github?: string;
+  demo?: string;
+  featured?: boolean;
+  tags: string[];
+  href: string;
+}
+const { title, description, stack, github, demo, featured, tags, href } = Astro.props;
+---
+<article class={`card group h-full flex flex-col ${featured ? 'md:col-span-2' : ''}`}>
+  <div class="flex flex-wrap gap-2 mb-3">
+    {tags.slice(0, 4).map(tag => <Badge key={tag} variant="accent">{tag}</Badge>)}
+  </div>
+  <h3 class="text-xl font-semibold text-brand-text mb-2 group-hover:text-brand-accent transition-colors">{title}</h3>
+  <p class="text-brand-muted flex-1 mb-4">{description}</p>
+  <div class="flex flex-wrap gap-2 text-xs text-brand-muted mb-4">
+    {stack.map(tech => <span key={tech} class="px-2 py-0.5 rounded bg-brand-border">{tech}</span>)}
+  </div>
+  <div class="flex items-center gap-4 pt-4 border-t border-brand-border">
+    <a href={href} class="link text-sm font-medium">View Project →</a>
+    {github && <a href={github} class="link text-sm" target="_blank" rel="noopener noreferrer" aria-label="GitHub">⌘ GitHub</a>}
+    {demo && <a href={demo} class="link text-sm" target="_blank" rel="noopener noreferrer" aria-label="Live Demo">🔗 Demo</a>}
+  </div>
+</article>

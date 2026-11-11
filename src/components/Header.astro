@@ -1,0 +1,25 @@
+---
+const navLinks = [
+  { href: '/', label: 'Home' },
+  { href: '/services', label: 'Services' },
+  { href: '/projects', label: 'Projects' },
+  { href: '/about', label: 'About' },
+  { href: '/contact', label: 'Contact' },
+];
+---
+<header class="sticky top-0 z-40 w-full border-b border-brand-border bg-brand-bg/80 backdrop-blur-sm">
+  <nav class="container-custom" aria-label="Main navigation">
+    <div class="flex h-16 items-center justify-between">
+      <a href="/" class="font-semibold text-brand-text hover:text-brand-accent transition-colors" aria-label="Gerald B. Aton — Home">
+        GBA
+      </a>
+      <div class="hidden md:flex md:items-center md:gap-8">
+        {navLinks.map(link => (
+          <a href={link.href} class="text-sm text-brand-muted hover:text-brand-accent transition-colors">{link.label}</a>
+        ))}
+        <a href="/contact" class="btn-primary text-sm">Get in Touch</a>
+      </div>
+      <button class="md:hidden" aria-label="Toggle menu" aria-expanded="false">☰</button>
+    </div>
+  </nav>
+</header>

@@ -1,0 +1,11 @@
+---
+interface Props {
+  src: string;
+  alt: string;
+  class?: string;
+}
+const { src, alt, class: className = '' } = Astro.props;
+---
+<div class={`relative w-48 h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 mx-auto md:mx-0 rounded-full overflow-hidden border-2 border-brand-accent/30 shadow-portrait-glow ${className}`}>
+  <img src={src} alt={alt} class="w-full h-full object-cover" loading="eager" fetchpriority="high" />
+</div>

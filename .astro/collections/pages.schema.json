@@ -1,0 +1,95 @@
+{
+  "$ref": "#/definitions/pages",
+  "definitions": {
+    "pages": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "hero": {
+          "type": "object",
+          "properties": {
+            "headline": {
+              "type": "string"
+            },
+            "subhead": {
+              "type": "string"
+            },
+            "ctaPrimary": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "type": "string"
+                },
+                "href": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "text",
+                "href"
+              ],
+              "additionalProperties": false
+            },
+            "ctaSecondary": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "type": "string"
+                },
+                "href": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "text",
+                "href"
+              ],
+              "additionalProperties": false
+            },
+            "badge": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "headline",
+            "subhead",
+            "ctaPrimary"
+          ],
+          "additionalProperties": false
+        },
+        "trustSignals": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "label",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "$schema": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "title"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

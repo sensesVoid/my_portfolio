@@ -1,0 +1,97 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Hero from '@/components/Hero.astro';
+import ServiceCard from '@/components/ServiceCard.astro';
+import ProjectCard from '@/components/ProjectCard.astro';
+import { getEntry, getCollection } from 'astro:content';
+
+const page = await getEntry('pages', 'index');
+const projects = await getCollection('projects');
+const featuredProject = projects.find(p => p.data.featured);
+const otherProjects = projects.filter(p => !p.data.featured).slice(0, 3);
+
+const services = [
+  { title: 'Trust & Safety Foundations', description: 'Policy frameworks, moderation pipelines, QA programs from scratch', href: '/services', icon: '🛡️' },
+  { title: 'Support Operations & QA', description: 'Fintech/consumer support scaling, productivity optimization, CSAT improvement', href: '/services', icon: '📞' },
+  { title: 'AI Automation & Tooling', description: 'Custom agent workflows, SQAC integration, local LLM deployment', href: '/services', icon: '🤖' },
+];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Gerald B. Aton',
+  url: 'https://myportfolio-theta-plum-30.vercel.app',
+  sameAs: [
+    'https://linkedin.com/in/geraldaton',
+    'https://github.com/sensesVoid',
+  ],
+  jobTitle: 'Trust & Safety Consultant',
+  worksFor: { '@type': 'Organization', name: 'Independent' },
+  knowsAbout: ['Content Moderation', 'Quality Assurance', 'Customer Support Operations', 'AI Agent Harnesses', 'LLM Memory Systems'],
+};
+---
+
+<BaseLayout title={page.data.title} description={page.data.description} jsonLd={jsonLd}>
+  <Hero {...page.data.hero} />
+
+  {/* Trust Signals Bar */}
+  <section class="section bg-brand-elevated/50 border-y border-brand-border" aria-label="Trust signals">
+    <div class="container-custom">
+      <dl class="grid grid-cols-2 md:grid-cols-5 gap-6 text-center">
+        {page.data.trustSignals?.map(signal => (
+          <div key={signal.label} class="px-4">
+            <dt class="text-3xl sm:text-4xl font-bold text-brand-accent">{signal.value}</dt>
+            <dd class="text-sm text-brand-muted mt-1">{signal.label}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </section>
+
+  {/* Featured Project: SQAC */}
+  {featuredProject && (
+    <section class="section" aria-labelledby="featured-heading">
+      <div class="container-custom">
+        <header class="mb-10">
+          <h2 id="featured-heading" class="text-2xl sm:text-3xl font-bold text-brand-text mb-2">Featured Project</h2>
+          <p class="text-brand-muted">My flagship open-source project — portable memory for LLMs</p>
+        </header>
+        <ProjectCard {...featuredProject.data} href={`/projects/${featuredProject.slug}`} featured={true} />
+      </div>
+    </section>
+  )}
+
+  {/* Services Preview */}
+  <section class="section bg-brand-elevated/50" aria-labelledby="services-preview-heading">
+    <div class="container-custom">
+      <header class="mb-10 text-center">
+        <h2 id="services-preview-heading" class="text-2xl sm:text-3xl font-bold text-brand-text mb-2">How I Help</h2>
+        <p class="text-brand-muted max-w-2xl mx-auto">Three engagement areas for early-stage startups building Trust & Safety</p>
+      </header>
+      <div class="grid md:grid-cols-3 gap-6">
+        {services.map(svc => <ServiceCard key={svc.title} {...svc} />)}
+      </div>
+      <div class="text-center mt-10">
+        <a href="/services" class="btn-secondary">View All Services →</a>
+      </div>
+    </div>
+  </section>
+
+  {/* Other Projects */}
+  {otherProjects.length > 0 && (
+    <section class="section" aria-labelledby="projects-heading">
+      <div class="container-custom">
+        <header class="mb-10">
+          <h2 id="projects-heading" class="text-2xl sm:text-3xl font-bold text-brand-text mb-2">Other Projects</h2>
+          <p class="text-brand-muted">All public work at <a href="https://github.com/sensesVoid" class="link">github.com/sensesVoid</a></p>
+        </header>
+        <div class="grid md:grid-cols-3 gap-6">
+          {otherProjects.map(p => <ProjectCard key={p.slug} {...p.data} href={`/projects/${p.slug}`} />)}
+        </div>
+        <div class="text-center mt-10">
+          <a href="/projects" class="btn-secondary">View All Projects →</a>
+        </div>
+      </div>
+    </section>
+  )}
+</BaseLayout>

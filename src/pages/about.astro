@@ -1,0 +1,137 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Hero from '@/components/Hero.astro';
+import Portrait from '@/components/Portrait.astro';
+import Timeline from '@/components/Timeline.astro';
+import Badge from '@/components/Badge.astro';
+import { getEntry } from 'astro:content';
+
+const page = await getEntry('pages', 'about');
+
+const experience = [
+  { period: 'Sep 2025 – Present', role: 'Content Moderator', company: 'Tech Mahindra Philippines', highlights: ['Major social platform, US-focused moderation', 'Policy enforcement at scale'] },
+  { period: 'Nov 2023 – Mar 2025', role: 'Email & Text FinTech Support', company: 'ECE Philippines', highlights: ['Albert financial technology app', '115% TPH target, 65% CSAT, 78% quality'] },
+  { period: 'Aug 2023 – Oct 2023', role: 'Customer Service Representative', company: 'Eperformax Philippines', highlights: ['T-Mobile inbound support', '95% CSAT, 50% NPS, <20 min AHT'] },
+  { period: '2 years', role: 'Quality Analyst', company: 'Wipro BPO Philippines', highlights: ['Policy evaluation & QA calibration', 'Knowledge base → 100% site quality score'] },
+  { period: 'Apr 2019 – Aug 2023', role: 'Digital Content Specialist', company: 'Wipro BPO Philippines', highlights: ['Content review & policy enforcement', 'Automation project → 20% productivity gain'] },
+  { period: 'Mar–Apr 2019', role: 'Customer Service Rep (Seasonal)', company: 'Harte Hanks Philippines', highlights: ['WWE ticket orders & refunds'] },
+  { period: 'Jul–Nov 2018', role: 'Customer Care Associate I', company: 'Conduent Philippines', highlights: ['iPhone troubleshooting', 'Top Agent Sep: 105% prod, 98% quality, 90% CSAT'] },
+  { period: 'Mar–Jun 2018', role: 'Customer Service Rep', company: 'Teleperformance Philippines', highlights: ['Xbox support & refunds'] },
+  { period: 'Oct 2017 – Jan 2018', role: 'Customer Care Rep I', company: 'Startek Philippines', highlights: ['Xfinity phone/internet/gift checks'] },
+  { period: 'Jun–Sep 2017', role: 'Technical Support Rep', company: 'Alorica / West Contact Services', highlights: ['Comcast phone/internet/cable'] },
+  { period: 'Apr–May 2017', role: 'Customer Service Rep (Seasonal)', company: 'SPICRM', highlights: ['Mother\'s Day flower orders & refunds'] },
+];
+
+const aiPeriod = [
+  { period: 'Mar–Sep 2025', role: 'AI Development Period', company: 'Self-Directed', highlights: ['SQAC — Portable LLM memory (HDC/VSA)', 'Pyralis — Sub-1B LLM on Kaggle T4', 'Wizky CLI — Rust + llama.cpp FFI', 'Agent harnesses: Hermes, OpenCode, Claude Code, Codex, Cline, Kilo, Freebuff, Antigravity', 'Independent research: Compact neuro-symbolic learning'] },
+];
+
+const skills = {
+  'Trust & Safety': ['Content Moderation', 'Policy Enforcement', 'Content Review', 'Risk Assessment', 'Quality Assurance', 'Quality Analysis'],
+  'Customer Support': ['Email/SMS/Voice Support', 'US Customer Support', 'Fintech Support', 'Technical Troubleshooting', 'Issue Resolution', 'Refund Handling'],
+  'Automation & Knowledge': ['Workflow Automation', 'Knowledge Base Development', 'Process Improvement', 'Productivity Optimization'],
+  'AI Agent Harnesses': ['Hermes', 'OpenCode', 'Claude Code', 'Codex', 'Cline', 'Kilo', 'Freebuff', 'Antigravity'],
+  'Programming & Data': ['Python', 'JavaScript', 'HTML', 'CSS', 'SQL'],
+  'Software & Creative': ['Google Workspace', 'Microsoft Office', 'Canva', 'Adobe Photoshop', 'Premiere Pro', 'DaVinci Resolve'],
+};
+
+const certifications = [
+  'Data Analyst Associate (SQL, DataCamp)',
+  'NC II Contact Center Servicing (Springboard Career Academy)',
+  'Career Service Professional Eligibility (CSC)',
+  'Career Service Sub-Professional Eligibility (CSC)',
+];
+
+const education = [
+  'B.S. Criminology (undergraduate coursework), Pamantasan ng Lungsod ng Muntinlupa, 2009–2013',
+];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Gerald B. Aton',
+  url: 'https://myportfolio-theta-plum-30.vercel.app',
+  image: 'https://myportfolio-theta-plum-30.vercel.app/Modern Dark Studio Portrait.png',
+  sameAs: ['https://linkedin.com/in/geraldaton', 'https://github.com/sensesVoid'],
+  jobTitle: 'Trust & Safety Consultant',
+  worksFor: { '@type': 'Organization', name: 'Independent' },
+  knowsAbout: ['Content Moderation', 'Quality Assurance', 'Customer Support', 'AI Agent Harnesses', 'LLM Memory Systems', 'Hyperdimensional Computing'],
+  alumniOf: { '@type': 'EducationalOrganization', name: 'Pamantasan ng Lungsod ng Muntinlupa' },
+};
+---
+
+<BaseLayout title={page.data.title} description={page.data.description} jsonLd={jsonLd}>
+  <section class="section pt-20 lg:pt-28" aria-labelledby="about-hero">
+    <div class="container-custom">
+      <div class="grid lg:grid-cols-[300px_1fr] gap-12 lg:gap-16 items-start">
+        {/* Portrait Sidebar */}
+        <aside class="lg:sticky lg:top-24 flex flex-col items-center text-center lg:text-left">
+          <Portrait src="/Modern Dark Studio Portrait.png" alt="Gerald B. Aton — professional portrait" />
+          <div class="mt-6 w-full">
+            <h1 class="text-2xl sm:text-3xl font-bold text-brand-text mb-1">Gerald B. Aton</h1>
+            <p class="text-brand-muted mb-2">Pasay City, Philippines</p>
+            <p class="text-brand-accent text-sm font-medium mb-6">Content Moderation • US Support • AI Tooling</p>
+            <div class="flex flex-wrap justify-center lg:justify-start gap-3">
+              <a href="mailto:geraldaton20@gmail.com" class="btn-secondary text-sm" aria-label="Email">✉ Email</a>
+              <a href="https://linkedin.com/in/geraldaton" class="btn-secondary text-sm" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">⟶ LinkedIn</a>
+              <a href="https://github.com/sensesVoid" class="btn-secondary text-sm" target="_blank" rel="noopener noreferrer" aria-label="GitHub">⌘ GitHub</a>
+            </div>
+          </div>
+        </aside>
+
+        {/* Main Content */}
+        <div class="space-y-16">
+          <Hero {...page.data.hero} />
+
+          <section aria-labelledby="summary-heading">
+            <h2 id="summary-heading" class="text-2xl font-bold text-brand-text mb-4">Professional Summary</h2>
+            <p class="text-brand-muted leading-relaxed">
+              Content moderator, quality analyst and customer support professional with 8 years of experience in policy enforcement, US customer support, fintech, telecom and consumer technology. Proven results in quality, productivity and customer satisfaction, including a 20% productivity gain from an automation project and a policy knowledge base that earned a 100% site quality score. Self-directed AI builder, hands-on with AI agent harnesses, coding CLIs and local LLM tooling.
+            </p>
+          </section>
+
+          <Timeline title="Professional Experience" items={experience} />
+          <Timeline title="AI Development Period (Mar–Sep 2025)" items={aiPeriod} />
+
+          <section aria-labelledby="skills-heading">
+            <h2 id="skills-heading" class="text-2xl font-bold text-brand-text mb-6">Core Skills</h2>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {Object.entries(skills).map(([category, items]) => (
+                <article key={category} class="card">
+                  <h3 class="text-sm font-semibold text-brand-accent uppercase tracking-wider mb-3">{category}</h3>
+                  <div class="flex flex-wrap gap-2">
+                    {items.map(skill => <Badge key={skill} variant="default">{skill}</Badge>)}
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section aria-labelledby="certifications-heading" class="space-y-8">
+            <h2 id="certifications-heading" class="text-2xl font-bold text-brand-text mb-4">Certifications</h2>
+            <ul class="space-y-2">
+              {certifications.map((cert, i) => (
+                <li key={i} class="flex items-start gap-3 text-brand-muted">
+                  <span class="w-1.5 h-1.5 rounded-full bg-brand-accent mt-1.5 flex-shrink-0" aria-hidden="true" />
+                  {cert}
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          <section aria-labelledby="education-heading">
+            <h2 id="education-heading" class="text-2xl font-bold text-brand-text mb-4">Education</h2>
+            <ul class="space-y-2">
+              {education.map((edu, i) => (
+                <li key={i} class="flex items-start gap-3 text-brand-muted">
+                  <span class="w-1.5 h-1.5 rounded-full bg-brand-accent mt-1.5 flex-shrink-0" aria-hidden="true" />
+                  {edu}
+                </li>
+              ))}
+            </ul>
+          </section>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

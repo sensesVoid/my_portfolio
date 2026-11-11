@@ -1,0 +1,51 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import ProjectCard from '@/components/ProjectCard.astro';
+
+const projects = await getCollection('projects');
+const featured = projects.find(p => p.data.featured);
+const others = projects.filter(p => !p.data.featured);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  itemListElement: projects.map((p, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    item: {
+      '@type': 'SoftwareProject',
+      name: p.data.title,
+      description: p.data.description,
+      url: `https://myportfolio-theta-plum-30.vercel.app/projects/${p.slug}`,
+      programmingLanguage: p.data.stack,
+    },
+  })),
+};
+---
+
+<BaseLayout title="Projects — Gerald B. Aton" description="Open-source projects: SQAC (LLM memory), Pyralis (small LLM), Wizky CLI (local AI), and agent harness workflows." jsonLd={jsonLd}>
+  <section class="section pt-20" aria-labelledby="projects-heading">
+    <div class="container-custom">
+      <header class="mb-10 text-center">
+        <h1 id="projects-heading" class="text-3xl sm:text-4xl font-bold text-brand-text mb-2">Projects</h1>
+        <p class="text-brand-muted max-w-2xl mx-auto">Open-source tools for LLM memory, small model training, local AI coding, and agent automation.</p>
+      </header>
+
+      {featured && (
+        <section class="mb-16" aria-labelledby="featured-heading">
+          <h2 id="featured-heading" class="sr-only">Featured Project</h2>
+          <ProjectCard {...featured.data} href={`/projects/${featured.slug}`} featured={true} />
+        </section>
+      )}
+
+      <section aria-labelledby="other-heading">
+        <h2 id="other-heading" class="text-2xl font-bold text-brand-text mb-6">Other Projects</h2>
+        <p class="text-brand-muted mb-8">All public work lives at <a href="https://github.com/sensesVoid" class="link">github.com/sensesVoid</a> — including Pyralis, Wizky, agent harness workflows, and research repos.</p>
+        <div class="grid md:grid-cols-3 gap-6">
+          {others.map(p => <ProjectCard key={p.slug} {...p.data} href={`/projects/${p.slug}`} />)}
+        </div>
+      </section>
+    </div>
+  </section>
+</BaseLayout>

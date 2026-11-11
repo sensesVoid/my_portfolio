@@ -1,0 +1,30 @@
+---
+import Badge from '@/components/Badge.astro';
+interface Props {
+  headline: string;
+  subhead: string;
+  ctaPrimary: { text: string; href: string };
+  ctaSecondary?: { text: string; href: string };
+  badge?: string;
+}
+const { headline, subhead, ctaPrimary, ctaSecondary, badge } = Astro.props;
+---
+<section class="section pt-20 lg:pt-28" aria-labelledby="hero-heading">
+  <div class="container-custom">
+    <div class="max-w-3xl">
+      {badge && <Badge variant="available" class="mb-6">{badge}</Badge>}
+      <h1 id="hero-heading" class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-brand-text mb-6">
+        {headline}
+      </h1>
+      <p class="text-lg sm:text-xl text-brand-muted mb-8 max-w-2xl leading-relaxed">
+        {subhead}
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4">
+        <a href={ctaPrimary.href} class="btn-primary w-full sm:w-auto">{ctaPrimary.text}</a>
+        {ctaSecondary && (
+          <a href={ctaSecondary.href} class="btn-secondary w-full sm:w-auto">{ctaSecondary.text}</a>
+        )}
+      </div>
+    </div>
+  </div>
+</section>
