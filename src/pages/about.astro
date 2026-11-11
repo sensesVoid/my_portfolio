@@ -4,6 +4,7 @@ import Hero from '@/components/Hero.astro';
 import Portrait from '@/components/Portrait.astro';
 import Timeline from '@/components/Timeline.astro';
 import Badge from '@/components/Badge.astro';
+import ScrollReveal from '@/components/ScrollReveal.astro';
 import { getEntry } from 'astro:content';
 
 const page = await getEntry('pages', 'about');
@@ -83,53 +84,66 @@ const jsonLd = {
         <div class="space-y-16">
           <Hero {...page.data.hero} />
 
-          <section aria-labelledby="summary-heading">
-            <h2 id="summary-heading" class="text-2xl font-bold text-brand-text mb-4">Professional Summary</h2>
-            <p class="text-brand-muted leading-relaxed">
-              Content moderator, quality analyst and customer support professional with 8 years of experience in policy enforcement, US customer support, fintech, telecom and consumer technology. Proven results in quality, productivity and customer satisfaction, including a 20% productivity gain from an automation project and a policy knowledge base that earned a 100% site quality score. Self-directed AI builder, hands-on with AI agent harnesses, coding CLIs and local LLM tooling.
-            </p>
-          </section>
+          <ScrollReveal delay={1} class="mb-16">
+            <section aria-labelledby="summary-heading">
+              <h2 id="summary-heading" class="text-2xl font-bold text-brand-text mb-4">Professional Summary</h2>
+              <p class="text-brand-muted leading-relaxed">
+                Content moderator, quality analyst and customer support professional with 8 years of experience in policy enforcement, US customer support, fintech, telecom and consumer technology. Proven results in quality, productivity and customer satisfaction, including a 20% productivity gain from an automation project and a policy knowledge base that earned a 100% site quality score. Self-directed AI builder, hands-on with AI agent harnesses, coding CLIs and local LLM tooling.
+              </p>
+            </section>
+          </ScrollReveal>
 
-          <Timeline title="Professional Experience" items={experience} />
-          <Timeline title="AI Development Period (Mar–Sep 2025)" items={aiPeriod} />
+          <ScrollReveal delay={2} class="mb-16">
+            <Timeline title="Professional Experience" items={experience} />
+          </ScrollReveal>
 
-          <section aria-labelledby="skills-heading">
-            <h2 id="skills-heading" class="text-2xl font-bold text-brand-text mb-6">Core Skills</h2>
-            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {Object.entries(skills).map(([category, items]) => (
-                <article key={category} class="card">
-                  <h3 class="text-sm font-semibold text-brand-accent uppercase tracking-wider mb-3">{category}</h3>
-                  <div class="flex flex-wrap gap-2">
-                    {items.map(skill => <Badge key={skill} variant="default">{skill}</Badge>)}
-                  </div>
-                </article>
-              ))}
-            </div>
-          </section>
+          <ScrollReveal delay={3} class="mb-16">
+            <Timeline title="AI Development Period (Mar–Sep 2025)" items={aiPeriod} />
+          </ScrollReveal>
 
-          <section aria-labelledby="certifications-heading" class="space-y-8">
-            <h2 id="certifications-heading" class="text-2xl font-bold text-brand-text mb-4">Certifications</h2>
-            <ul class="space-y-2">
-              {certifications.map((cert, i) => (
-                <li key={i} class="flex items-start gap-3 text-brand-muted">
-                  <span class="w-1.5 h-1.5 rounded-full bg-brand-accent mt-1.5 flex-shrink-0" aria-hidden="true" />
-                  {cert}
-                </li>
-              ))}
-            </ul>
-          </section>
+          <ScrollReveal delay={4} class="mb-16">
+            <section aria-labelledby="skills-heading">
+              <h2 id="skills-heading" class="text-2xl font-bold text-brand-text mb-6">Core Skills</h2>
+              <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {Object.entries(skills).map(([category, items]) => (
+                  <article key={category} class="card">
+                    <h3 class="text-sm font-semibold text-brand-accent uppercase tracking-wider mb-3">{category}</h3>
+                    <div class="flex flex-wrap gap-2">
+                      {items.map(skill => <Badge key={skill} variant="default">{skill}</Badge>)}
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </section>
+          </ScrollReveal>
 
-          <section aria-labelledby="education-heading">
-            <h2 id="education-heading" class="text-2xl font-bold text-brand-text mb-4">Education</h2>
-            <ul class="space-y-2">
-              {education.map((edu, i) => (
-                <li key={i} class="flex items-start gap-3 text-brand-muted">
-                  <span class="w-1.5 h-1.5 rounded-full bg-brand-accent mt-1.5 flex-shrink-0" aria-hidden="true" />
-                  {edu}
-                </li>
-              ))}
-            </ul>
-          </section>
+          <ScrollReveal delay={5} class="mb-16">
+            <section aria-labelledby="certifications-heading" class="space-y-8">
+              <h2 id="certifications-heading" class="text-2xl font-bold text-brand-text mb-4">Certifications</h2>
+              <ul class="space-y-2">
+                {certifications.map((cert, i) => (
+                  <li key={i} class="flex items-start gap-3 text-brand-muted">
+                    <span class="w-1.5 h-1.5 rounded-full bg-brand-accent mt-1.5 flex-shrink-0" aria-hidden="true" />
+                    {cert}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          </ScrollReveal>
+
+          <ScrollReveal delay={6}>
+            <section aria-labelledby="education-heading">
+              <h2 id="education-heading" class="text-2xl font-bold text-brand-text mb-4">Education</h2>
+              <ul class="space-y-2">
+                {education.map((edu, i) => (
+                  <li key={i} class="flex items-start gap-3 text-brand-muted">
+                    <span class="w-1.5 h-1.5 rounded-full bg-brand-accent mt-1.5 flex-shrink-0" aria-hidden="true" />
+                    {edu}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          </ScrollReveal>
         </div>
       </div>
     </div>
