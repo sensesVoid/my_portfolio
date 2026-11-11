@@ -1,21 +1,23 @@
 ---
+import Icon from '@/components/Icon.astro';
 const currentYear = new Date().getFullYear();
 const socialLinks = [
-  { href: 'mailto:geraldaton20@gmail.com', label: 'Email', icon: '✉' },
-  { href: 'https://linkedin.com/in/geraldaton', label: 'LinkedIn', icon: '⟶' },
-  { href: 'https://github.com/sensesVoid', label: 'GitHub', icon: '⌘' },
+  { href: 'mailto:geraldaton20@gmail.com', label: 'Email', icon: 'mail' },
+  { href: 'https://linkedin.com/in/geraldaton', label: 'LinkedIn', icon: 'linkedin' },
+  { href: 'https://github.com/sensesVoid', label: 'GitHub', icon: 'github' },
 ];
 ---
-<footer class="border-t border-brand-border bg-brand-elevated">
-  <div class="container-custom py-12 lg:py-16">
+<footer class="border-t border-brand-border bg-brand-elevated relative overflow-hidden">
+  <div class="absolute inset-0 bg-gradient-to-t from-brand-bg/50 to-transparent" aria-hidden="true" />
+  <div class="container-custom py-12 lg:py-16 relative z-10">
     <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
       <p class="text-sm text-brand-muted">
         © {currentYear} Gerald B. Aton. Built with Astro & Tailwind.
       </p>
       <div class="flex items-center gap-6">
         {socialLinks.map(link => (
-          <a href={link.href} class="text-sm text-brand-muted hover:text-brand-accent transition-colors flex items-center gap-1" aria-label={link.label} target="_blank" rel="noopener noreferrer">
-            <span aria-hidden="true">{link.icon}</span>
+          <a href={link.href} class="text-brand-muted hover:text-brand-accent transition-colors flex items-center gap-2 p-2 rounded-lg hover:bg-brand-bg" aria-label={link.label} target="_blank" rel="noopener noreferrer">
+            <Icon name={link.icon} size={20} />
             <span class="hidden sm:inline">{link.label}</span>
           </a>
         ))}
