@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Hero from '@/components/Hero.astro';
+import ServiceCard from '@/components/ServiceCard.astro';
 import { getEntry } from 'astro:content';
 import Badge from '@/components/Badge.astro';
 
@@ -12,28 +13,28 @@ const services = [
     target: 'Pre-seed → Series A',
     scope: 'Policy framework design, moderation workflow setup, reviewer QA calibration, escalation paths, tooling selection',
     outcomes: 'Launch-ready T&S ops in 4-6 weeks; measurable quality baseline',
-    icon: '🛡️',
+    icon: 'shield',
   },
   {
     title: 'Support Operations & QA',
     target: 'Seed → Series B',
     scope: 'Queue design, SLA/SLO definition, QA scorecards, coaching programs, productivity tooling, fintech/telecom domain expertise',
     outcomes: '15-30% TPH improvement; CSAT >90%; reduced escalation rate',
-    icon: '📞',
+    icon: 'users',
   },
   {
     title: 'AI Automation & Tooling',
     target: 'Any stage',
     scope: 'Custom agent workflows (OpenCode, Claude Code, Hermes), SQAC memory integration, local LLM deployment (llama.cpp/GGUF), RAG vs. memory architecture decisions',
     outcomes: '50-90% context cost reduction; portable knowledge across models',
-    icon: '🤖',
+    icon: 'cpu',
   },
   {
     title: 'Fractional QA Lead',
     target: 'Early-stage',
     scope: 'Embedded QA leadership: hiring, calibration, process design, tooling, reporting',
     outcomes: 'Self-sustaining QA function; knowledge transfer to internal hire',
-    icon: '👥',
+    icon: 'sparkles',
   },
 ];
 
@@ -70,29 +71,9 @@ const jsonLd = {
         <h2 id="services-heading" class="text-2xl sm:text-3xl font-bold text-brand-text mb-2">Consulting Services</h2>
         <p class="text-brand-muted max-w-2xl mx-auto">Each engagement starts with a free discovery call. No rate card — we agree on scope and value first.</p>
       </header>
-      <div class="space-y-8">
-        {services.map((svc, i) => (
-          <article key={svc.title} class="card relative overflow-hidden">
-            <div class="absolute top-0 left-0 w-1 h-full bg-brand-accent" aria-hidden="true" />
-            <div class="grid md:grid-cols-[1fr_2fr_2fr_1fr] gap-6 items-start p-6">
-              <div class="flex flex-col items-center md:items-start text-center md:text-left">
-                <span class="text-4xl mb-3" aria-hidden="true">{svc.icon}</span>
-                <Badge variant="accent" class="mb-3">{svc.target}</Badge>
-                <h3 class="text-xl font-semibold text-brand-text">{svc.title}</h3>
-              </div>
-              <div>
-                <h4 class="text-sm font-medium text-brand-accent uppercase tracking-wider mb-2">Scope</h4>
-                <p class="text-brand-muted">{svc.scope}</p>
-              </div>
-              <div>
-                <h4 class="text-sm font-medium text-brand-accent uppercase tracking-wider mb-2">Outcomes</h4>
-                <p class="text-brand-text">{svc.outcomes}</p>
-              </div>
-              <div class="flex items-center justify-center md:justify-end">
-                <a href="/contact" class="btn-primary">Discuss This →</a>
-              </div>
-            </div>
-          </article>
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {services.map(svc => (
+          <ServiceCard key={svc.title} {...svc} href="/contact" />
         ))}
       </div>
     </div>
