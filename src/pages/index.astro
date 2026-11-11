@@ -3,6 +3,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import Hero from '@/components/Hero.astro';
 import ServiceCard from '@/components/ServiceCard.astro';
 import ProjectCard from '@/components/ProjectCard.astro';
+import TrustSignal from '@/components/TrustSignal.astro';
 import { getEntry, getCollection } from 'astro:content';
 
 const page = await getEntry('pages', 'index');
@@ -11,10 +12,19 @@ const featuredProject = projects.find(p => p.data.featured);
 const otherProjects = projects.filter(p => !p.data.featured).slice(0, 3);
 
 const services = [
-  { title: 'Trust & Safety Foundations', description: 'Policy frameworks, moderation pipelines, QA programs from scratch', href: '/services', icon: '🛡️' },
-  { title: 'Support Operations & QA', description: 'Fintech/consumer support scaling, productivity optimization, CSAT improvement', href: '/services', icon: '📞' },
-  { title: 'AI Automation & Tooling', description: 'Custom agent workflows, SQAC integration, local LLM deployment', href: '/services', icon: '🤖' },
+  { title: 'Trust & Safety Foundations', description: 'Policy frameworks, moderation pipelines, QA programs from scratch', href: '/services', icon: 'shield' },
+  { title: 'Support Operations & QA', description: 'Fintech/consumer support scaling, productivity optimization, CSAT improvement', href: '/services', icon: 'users' },
+  { title: 'AI Automation & Tooling', description: 'Custom agent workflows, SQAC integration, local LLM deployment', href: '/services', icon: 'cpu' },
 ];
+
+const getIconForSignal = (label: string) => {
+  if (label.includes('Years')) return 'award';
+  if (label.includes('Quality')) return 'check-circle';
+  if (label.includes('Productivity')) return 'trending-up';
+  if (label.includes('TPH')) return 'target';
+  if (label.includes('CSAT')) return 'users';
+  return 'target';
+};
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -37,14 +47,11 @@ const jsonLd = {
   {/* Trust Signals Bar */}
   <section class="section bg-brand-elevated/50 border-y border-brand-border" aria-label="Trust signals">
     <div class="container-custom">
-      <dl class="grid grid-cols-2 md:grid-cols-5 gap-6 text-center">
-        {page.data.trustSignals?.map(signal => (
-          <div key={signal.label} class="px-4">
-            <dt class="text-3xl sm:text-4xl font-bold text-brand-accent">{signal.value}</dt>
-            <dd class="text-sm text-brand-muted mt-1">{signal.label}</dd>
-          </div>
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-4 sm:gap-6">
+        {page.data.trustSignals?.map((signal, i) => (
+          <TrustSignal key={signal.label} {...signal} index={i} icon={getIconForSignal(signal.label)} />
         ))}
-      </dl>
+      </div>
     </div>
   </section>
 

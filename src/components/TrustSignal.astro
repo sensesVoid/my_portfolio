@@ -1,0 +1,23 @@
+---
+import Icon from '@/components/Icon.astro';
+import ScrollReveal from '@/components/ScrollReveal.astro';
+interface Props {
+  label: string;
+  value: string;
+  icon?: 'shield' | 'users' | 'cpu' | 'target' | 'trending-up' | 'award' | 'clock' | 'check-circle';
+  index: number;
+}
+const { label, value, icon = 'target', index } = Astro.props;
+---
+<ScrollReveal delay={index + 1} class="px-4">
+  <article class="card relative overflow-hidden group text-center p-6 sm:p-8 transition-all duration-500 hover:shadow-xl hover:shadow-brand-accent/10 hover:border-brand-accent/30 hover:-translate-y-1">
+    <div class="absolute inset-0 bg-gradient-to-br from-brand-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" aria-hidden="true" />
+    <div class="relative z-10 flex flex-col items-center">
+      <div class="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-brand-accent/10 text-brand-accent mb-4 group-hover:bg-brand-accent group-hover:text-white transition-all duration-300">
+        <Icon name={icon} size={28} aria-label={label} />
+      </div>
+      <dt class="font-display text-4xl sm:text-5xl font-bold text-brand-text mb-1">{value}</dt>
+      <dd class="text-sm text-brand-muted max-w-xs">{label}</dd>
+    </div>
+  </article>
+</ScrollReveal>
