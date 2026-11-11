@@ -3,6 +3,7 @@ import SEO from '@/components/SEO.astro';
 import ThemeScript from '@/components/ThemeScript.astro';
 import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
+import BackgroundEffects from '@/components/BackgroundEffects.astro';
 interface Props {
   title: string;
   description?: string;
@@ -11,6 +12,7 @@ interface Props {
   jsonLd?: Record<string, unknown>;
 }
 const { title, description, image, url, jsonLd } = Astro.props;
+const siteUrl = url || Astro.site?.toString() || 'https://portfolio-weld-sigma-1l5rpojwjt.vercel.app';
 ---
 <!doctype html>
 <html lang="en" class="dark">
@@ -18,14 +20,20 @@ const { title, description, image, url, jsonLd } = Astro.props;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
-    <SEO title={title} description={description} image={image} url={url} jsonLd={jsonLd} />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/space-grotesk-latin-700.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/space-grotesk-latin-600.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/space-grotesk-latin-500.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/space-grotesk-latin-400.woff2" />
+    <SEO title={title} description={description} image={image} url={siteUrl} jsonLd={jsonLd} />
     <ThemeScript />
   </head>
-  <body class="min-h-screen flex flex-col">
+  <body class="min-h-screen flex flex-col relative">
+    <BackgroundEffects />
     <Header />
     <main class="flex-1" id="main-content">
       <slot />
     </main>
     <Footer />
+    <script src="/scroll-animations.js" defer></script>
   </body>
 </html>
