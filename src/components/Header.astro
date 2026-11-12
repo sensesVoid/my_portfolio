@@ -1,24 +1,23 @@
 ---
 import Icon from '@/components/Icon.astro';
 const navLinks = [
-  { href: '/', label: 'Home' },
-  { href: '/services', label: 'Services' },
-  { href: '/projects', label: 'Projects' },
-  { href: '/about', label: 'About' },
-  { href: '/contact', label: 'Contact' },
+  { href: '#about', label: 'About' },
+  { href: '#projects', label: 'Work' },
+  { href: '#services', label: 'Services' },
+  { href: '#contact', label: 'Contact' },
 ];
 ---
 <header class="sticky top-0 z-40 w-full border-b border-brand-border bg-brand-bg/90 backdrop-blur-md">
   <nav class="container-custom" aria-label="Main navigation">
     <div class="flex h-16 items-center justify-between">
-      <a href="/" class="font-display text-lg font-medium text-brand-text hover:text-brand-accent transition-colors" aria-label="Gerald B. Aton — Home">
+      <a href="#top" class="font-display text-lg font-medium text-brand-text hover:text-brand-accent transition-colors" aria-label="Gerald B. Aton — Home">
         Gerald B. Aton
       </a>
       <div class="hidden md:flex md:items-center md:gap-8">
         {navLinks.map(link => (
           <a href={link.href} class="text-sm text-brand-muted hover:text-brand-text transition-colors">{link.label}</a>
         ))}
-        <a href="/contact" class="text-sm font-medium text-brand-accent hover:text-brand-accent-hover transition-colors">
+        <a href="#contact" class="text-sm font-medium text-brand-accent hover:text-brand-accent-hover transition-colors">
           Book a call →
         </a>
       </div>
