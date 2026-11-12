@@ -1,5 +1,4 @@
 ---
-import Badge from '@/components/Badge.astro';
 interface Props {
   title: string;
   subtitle: string;
@@ -10,15 +9,18 @@ interface Props {
 const { title, subtitle, badges, links, stack } = Astro.props;
 ---
 <header class="mb-12">
-  <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-brand-text mb-4">{title}</h1>
-  <p class="text-lg text-brand-muted mb-6 max-w-3xl">{subtitle}</p>
-  <div class="flex flex-wrap gap-2 mb-6">
-    {badges.map(b => <Badge key={b} variant="accent">{b}</Badge>)}
-  </div>
-  <div class="flex flex-wrap gap-4 mb-6">
-    {links.map(l => <a key={l.href} href={l.href} class="btn-secondary text-sm" target="_blank" rel="noopener noreferrer">{l.text}</a>)}
-  </div>
-  <div class="flex flex-wrap gap-2 text-xs text-brand-muted">
-    {stack.map(tech => <span key={tech} class="px-2 py-0.5 rounded bg-brand-border">{tech}</span>)}
-  </div>
+  <p class="eyebrow mb-4">Project</p>
+  <h1 class="font-display text-5xl sm:text-6xl font-medium text-brand-text leading-tight mb-4">{title}</h1>
+  <p class="text-lg text-brand-muted mb-8 max-w-3xl">{subtitle}</p>
+  {badges && badges.length > 0 && (
+    <p class="font-mono text-xs text-brand-muted mb-8">{badges.join(' · ')}</p>
+  )}
+  {links && links.length > 0 && (
+    <div class="flex flex-wrap gap-6 mb-8 text-sm">
+      {links.map(l => <a key={l.href} href={l.href} class="text-brand-text hover:text-brand-accent transition-colors" target="_blank" rel="noopener noreferrer">{l.text} →</a>)}
+    </div>
+  )}
+  {stack && stack.length > 0 && (
+    <p class="font-mono text-xs text-brand-muted">{stack.join(' · ')}</p>
+  )}
 </header>

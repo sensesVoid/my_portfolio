@@ -25,24 +25,27 @@ const jsonLd = {
 ---
 
 <BaseLayout title="Projects — Gerald B. Aton" description="Open-source projects: SQAC (LLM memory), Pyralis (small LLM), Wizky CLI (local AI), and agent harness workflows." jsonLd={jsonLd}>
-  <section class="section pt-20" aria-labelledby="projects-heading">
+  <section class="section pt-24" aria-labelledby="projects-heading">
     <div class="container-custom">
-      <header class="mb-10 text-center">
-        <h1 id="projects-heading" class="text-3xl sm:text-4xl font-bold text-brand-text mb-2">Projects</h1>
-        <p class="text-brand-muted max-w-2xl mx-auto">Open-source tools for LLM memory, small model training, local AI coding, and agent automation.</p>
-      </header>
+      <p class="eyebrow mb-6">Projects</p>
+      <h1 id="projects-heading" class="font-display text-5xl sm:text-6xl font-medium text-brand-text leading-tight mb-6 max-w-3xl">
+        Open-source tools for LLM memory, small models, and local AI.
+      </h1>
+      <p class="text-brand-muted max-w-2xl leading-relaxed mb-12">
+        SQAC is the flagship. The rest are research and tooling that feed into it.
+      </p>
 
       {featured && (
-        <section class="mb-16" aria-labelledby="featured-heading">
-          <h2 id="featured-heading" class="sr-only">Featured Project</h2>
+        <section class="mb-16 border-t border-brand-border pt-12" aria-labelledby="featured-heading">
+          <p class="eyebrow mb-8">Featured</p>
           <ProjectCard {...featured.data} href={`/projects/${featured.slug}`} featured={true} />
         </section>
       )}
 
-      <section aria-labelledby="other-heading">
-        <h2 id="other-heading" class="text-2xl font-bold text-brand-text mb-6">Other Projects</h2>
-        <p class="text-brand-muted mb-8">All public work lives at <a href="https://github.com/sensesVoid" class="link">github.com/sensesVoid</a> — including Pyralis, Wizky, agent harness workflows, and research repos.</p>
-        <div class="grid md:grid-cols-3 gap-6">
+      <section aria-labelledby="other-heading" class="border-t border-brand-border pt-12">
+        <p class="eyebrow mb-8">Other work</p>
+        <p class="text-brand-muted mb-8 max-w-2xl">All public work lives at <a href="https://github.com/sensesVoid" class="link">github.com/sensesVoid</a> — Pyralis, Wizky, agent harness workflows, and research repos.</p>
+        <div>
           {others.map(p => <ProjectCard key={p.slug} {...p.data} href={`/projects/${p.slug}`} />)}
         </div>
       </section>

@@ -4,6 +4,7 @@ import ThemeScript from '@/components/ThemeScript.astro';
 import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
 import BackgroundEffects from '@/components/BackgroundEffects.astro';
+import Chatbot from '@/components/Chatbot.astro';
 interface Props {
   title: string;
   description?: string;
@@ -20,10 +21,6 @@ const siteUrl = url || Astro.site?.toString() || 'https://portfolio-weld-sigma-1
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
-    <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/space-grotesk-latin-700.woff2" />
-    <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/space-grotesk-latin-600.woff2" />
-    <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/space-grotesk-latin-500.woff2" />
-    <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/space-grotesk-latin-400.woff2" />
     <SEO title={title} description={description} image={image} url={siteUrl} jsonLd={jsonLd} />
     <ThemeScript />
   </head>
@@ -34,6 +31,8 @@ const siteUrl = url || Astro.site?.toString() || 'https://portfolio-weld-sigma-1
       <slot />
     </main>
     <Footer />
+    <Chatbot />
     <script src="/scroll-animations.js" defer></script>
+    <script src="/chat-widget.js" defer></script>
   </body>
 </html>

@@ -28,7 +28,7 @@ const jsonLd = {
 <BaseLayout title={`${data.title} — Gerald B. Aton`} description={data.description} jsonLd={jsonLd}>
   <section class="section pt-20" aria-labelledby="project-title">
     <div class="container-custom max-w-4xl">
-      <ProjectHero {...data.hero} stack={data.stack} />
+      <ProjectHero title={data.title} {...data.hero} stack={data.stack} />
       
       <div class="prose prose-invert max-w-none" set:html={data.content || ''} />
       
@@ -38,13 +38,13 @@ const jsonLd = {
           <hr class="my-12 border-brand-border" />
           
           <section aria-labelledby="problem-heading">
-            <h2 id="problem-heading" class="text-2xl font-bold text-brand-text mb-4">The Problem</h2>
+            <h2 id="problem-heading" class="font-display text-2xl font-medium text-brand-text mb-4">The Problem</h2>
             <p class="text-brand-muted mb-4">Every token you put into an LLM's context costs GPU memory. A 1M-token conversation with Llama-3.1-8B needs ~125,000 MiB of KV cache. Stuffing your entire memory into the context window is the "5M-token fantasy."</p>
             <p class="text-brand-muted mb-4">SQAC recalls only the top-k relevant exchanges (~135 tokens) at ~0.1ms, reducing KV cache to ~16.9 MiB — a <strong class="text-brand-accent">1,000× (99.9%) reduction</strong>. Your memory stays constant-cost regardless of how much you've stored.</p>
           </section>
 
           <section aria-labelledby="concepts-heading" class="mt-12">
-            <h2 id="concepts-heading" class="text-2xl font-bold text-brand-text mb-4">Core Concepts</h2>
+            <h2 id="concepts-heading" class="font-display text-2xl font-medium text-brand-text mb-4">Core Concepts</h2>
             <div class="grid md:grid-cols-2 gap-6">
               <article class="card">
                 <h3 class="text-lg font-semibold text-brand-text mb-2">🗂️ Cartridge</h3>

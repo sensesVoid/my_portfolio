@@ -12,19 +12,10 @@ const featuredProject = projects.find(p => p.data.featured);
 const otherProjects = projects.filter(p => !p.data.featured).slice(0, 3);
 
 const services = [
-  { title: 'Trust & Safety Foundations', description: 'Policy frameworks, moderation pipelines, QA programs from scratch', href: '/services', icon: 'shield' },
-  { title: 'Support Operations & QA', description: 'Fintech/consumer support scaling, productivity optimization, CSAT improvement', href: '/services', icon: 'users' },
-  { title: 'AI Automation & Tooling', description: 'Custom agent workflows, SQAC integration, local LLM deployment', href: '/services', icon: 'cpu' },
+  { title: 'Trust & Safety Foundations', description: 'Policy frameworks, moderation pipelines, QA programs from scratch.', href: '/services' },
+  { title: 'Support Operations & QA', description: 'Fintech and consumer support scaling, productivity optimization, CSAT improvement.', href: '/services' },
+  { title: 'AI Automation & Tooling', description: 'Custom agent workflows, SQAC integration, local LLM deployment.', href: '/services' },
 ];
-
-const getIconForSignal = (label: string) => {
-  if (label.includes('Years')) return 'award';
-  if (label.includes('Quality')) return 'check-circle';
-  if (label.includes('Productivity')) return 'trending-up';
-  if (label.includes('TPH')) return 'target';
-  if (label.includes('CSAT')) return 'users';
-  return 'target';
-};
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -44,59 +35,66 @@ const jsonLd = {
 <BaseLayout title={page.data.title} description={page.data.description} jsonLd={jsonLd}>
   <Hero {...page.data.hero} />
 
-  {/* Trust Signals Bar */}
-  <section class="section bg-brand-elevated/50 border-y border-brand-border" aria-label="Trust signals">
-    <div class="container-custom">
-      <div class="grid grid-cols-2 md:grid-cols-5 gap-4 sm:gap-6">
+  {/* Trust Signals */}
+  <section class="border-y border-brand-border" aria-label="Trust signals">
+    <div class="container-custom py-12">
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-0">
         {page.data.trustSignals?.map((signal, i) => (
-          <TrustSignal key={signal.label} {...signal} index={i} icon={getIconForSignal(signal.label)} />
+          <TrustSignal key={signal.label} {...signal} index={i} />
         ))}
       </div>
     </div>
   </section>
 
-  {/* Featured Project: SQAC */}
+  {/* Featured Project */}
   {featuredProject && (
     <section class="section" aria-labelledby="featured-heading">
       <div class="container-custom">
-        <header class="mb-10">
-          <h2 id="featured-heading" class="text-2xl sm:text-3xl font-bold text-brand-text mb-2">Featured Project</h2>
-          <p class="text-brand-muted">My flagship open-source project — portable memory for LLMs</p>
-        </header>
+        <p class="eyebrow mb-8">01 — Featured Project</p>
         <ProjectCard {...featuredProject.data} href={`/projects/${featuredProject.slug}`} featured={true} />
       </div>
     </section>
   )}
 
-  {/* Services Preview */}
-  <section class="section bg-brand-elevated/50" aria-labelledby="services-preview-heading">
+  {/* Services */}
+  <section class="section border-t border-brand-border" aria-labelledby="services-preview-heading">
     <div class="container-custom">
-      <header class="mb-10 text-center">
-        <h2 id="services-preview-heading" class="text-2xl sm:text-3xl font-bold text-brand-text mb-2">How I Help</h2>
-        <p class="text-brand-muted max-w-2xl mx-auto">Three engagement areas for early-stage startups building Trust & Safety</p>
-      </header>
-      <div class="grid md:grid-cols-3 gap-6">
-        {services.map(svc => <ServiceCard key={svc.title} {...svc} />)}
+      <div class="grid md:grid-cols-[240px_1fr] gap-8 md:gap-16 mb-12">
+        <div>
+          <p class="eyebrow mb-3">02 — Services</p>
+          <h2 id="services-preview-heading" class="font-display text-3xl sm:text-4xl font-medium text-brand-text">How I help</h2>
+        </div>
+        <p class="text-brand-muted max-w-xl self-end">Three engagement areas for early-stage startups building Trust & Safety operations.</p>
       </div>
-      <div class="text-center mt-10">
-        <a href="/services" class="btn-secondary">View All Services →</a>
+      <div>
+        {services.map((svc, i) => <ServiceCard key={svc.title} {...svc} index={i + 1} />)}
+      </div>
+      <div class="mt-12">
+        <a href="/services" class="text-sm text-brand-muted hover:text-brand-text transition-colors inline-flex items-center gap-2">
+          All services <span aria-hidden="true">→</span>
+        </a>
       </div>
     </div>
   </section>
 
   {/* Other Projects */}
   {otherProjects.length > 0 && (
-    <section class="section" aria-labelledby="projects-heading">
+    <section class="section border-t border-brand-border" aria-labelledby="projects-heading">
       <div class="container-custom">
-        <header class="mb-10">
-          <h2 id="projects-heading" class="text-2xl sm:text-3xl font-bold text-brand-text mb-2">Other Projects</h2>
-          <p class="text-brand-muted">All public work at <a href="https://github.com/sensesVoid" class="link">github.com/sensesVoid</a></p>
-        </header>
-        <div class="grid md:grid-cols-3 gap-6">
+        <div class="grid md:grid-cols-[240px_1fr] gap-8 md:gap-16 mb-12">
+          <div>
+            <p class="eyebrow mb-3">03 — Work</p>
+            <h2 id="projects-heading" class="font-display text-3xl sm:text-4xl font-medium text-brand-text">Other projects</h2>
+          </div>
+          <p class="text-brand-muted max-w-xl self-end">All public work at <a href="https://github.com/sensesVoid" class="link">github.com/sensesVoid</a>.</p>
+        </div>
+        <div>
           {otherProjects.map(p => <ProjectCard key={p.slug} {...p.data} href={`/projects/${p.slug}`} />)}
         </div>
-        <div class="text-center mt-10">
-          <a href="/projects" class="btn-secondary">View All Projects →</a>
+        <div class="mt-12">
+          <a href="/projects" class="text-sm text-brand-muted hover:text-brand-text transition-colors inline-flex items-center gap-2">
+            All projects <span aria-hidden="true">→</span>
+          </a>
         </div>
       </div>
     </section>

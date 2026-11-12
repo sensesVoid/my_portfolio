@@ -1,0 +1,14 @@
+name = "gerald-aton-portfolio-chatbot"
+main = "src/worker/chat.ts"
+compatibility_date = "2024-11-01"
+compatibility_flags = ["nodejs_compat"]
+
+[ai]
+binding = "AI"
+
+[vars]
+PORTFOLIO_CONTEXT = "Gerald B. Aton — Trust & Safety consultant, 8 years content moderation/QA/US support. Built SQAC (portable LLM memory), Pyralis (sub-1B LLM), Wizky CLI (Rust + llama.cpp). Available for consulting: T&S foundations, Support Ops & QA, AI Automation, Fractional QA Lead."
+
+[[kv_namespaces]]
+binding = "CHAT_HISTORY"
+id = "e2f58b1badff435494780a75cd842751"

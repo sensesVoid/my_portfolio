@@ -2,15 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-@import '@fontsource/space-grotesk/400.css';
-@import '@fontsource/space-grotesk/500.css';
-@import '@fontsource/space-grotesk/600.css';
-@import '@fontsource/space-grotesk/700.css';
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,700;0,900;1,400&family=JetBrains+Mono:wght@400;500&display=swap');
 
 :root {
-  --font-display: 'Space Grotesk', system-ui, sans-serif;
-  --font-body: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --noise-opacity: 0.03;
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 }
 
 @layer base {
@@ -21,11 +18,11 @@
     scroll-behavior: smooth;
   }
   body {
-    @apply bg-brand-bg text-brand-text antialiased font-body;
+    @apply bg-brand-bg text-brand-text antialiased;
+    font-family: var(--font-body);
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-    background-repeat: repeat;
-    background-size: 256px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
   ::selection {
     @apply bg-brand-accent/30 text-brand-text;
@@ -33,32 +30,36 @@
   :focus-visible {
     @apply outline-none ring-2 ring-brand-accent ring-offset-2 ring-offset-brand-bg;
   }
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
 }
 
 @layer components {
   .container-custom {
-    @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8;
+    @apply mx-auto max-w-6xl px-6 sm:px-8 lg:px-10;
   }
   .section {
-    @apply py-16 sm:py-24 lg:py-32;
+    @apply py-20 sm:py-28 lg:py-36;
   }
   .card {
-    @apply bg-brand-elevated border border-brand-border rounded-xl p-6 transition-shadow hover:shadow-xl hover:shadow-brand-accent/10;
+    @apply bg-brand-elevated border border-brand-border rounded-lg;
   }
   .btn-primary {
-    @apply inline-flex items-center justify-center rounded-lg bg-brand-accent px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-brand-accent-hover focus:outline-none focus:ring-2 focus:ring-brand-accent focus:ring-offset-2 focus:ring-offset-brand-bg;
+    @apply inline-flex items-center justify-center rounded-md bg-brand-accent px-6 py-3 text-sm font-medium text-brand-bg transition-colors hover:bg-brand-accent-hover focus:outline-none focus:ring-2 focus:ring-brand-accent focus:ring-offset-2 focus:ring-offset-brand-bg;
   }
   .btn-secondary {
-    @apply inline-flex items-center justify-center rounded-lg border border-brand-border bg-transparent px-6 py-3 text-sm font-medium text-brand-text transition-colors hover:bg-brand-elevated focus:outline-none focus:ring-2 focus:ring-brand-accent focus:ring-offset-2 focus:ring-offset-brand-bg;
+    @apply inline-flex items-center justify-center rounded-md border border-brand-border bg-transparent px-6 py-3 text-sm font-medium text-brand-text transition-colors hover:border-brand-accent hover:text-brand-accent focus:outline-none focus:ring-2 focus:ring-brand-accent focus:ring-offset-2 focus:ring-offset-brand-bg;
   }
   .badge {
     @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium;
   }
   .badge-available {
-    @apply bg-brand-available/20 text-brand-available border border-brand-available/30;
+    @apply bg-brand-available/15 text-brand-available border border-brand-available/30;
   }
   .link {
-    @apply text-brand-accent hover:text-brand-accent-hover transition-colors underline-offset-2 hover:underline;
+    @apply text-brand-accent hover:text-brand-accent-hover transition-colors underline-offset-4 hover:underline;
   }
   .font-display {
     font-family: var(--font-display);
@@ -66,13 +67,19 @@
   .font-body {
     font-family: var(--font-body);
   }
+  .font-mono {
+    font-family: var(--font-mono);
+  }
+  .eyebrow {
+    @apply font-mono text-xs uppercase tracking-[0.2em] text-brand-muted;
+  }
 }
 
 @layer utilities {
   .reveal {
     opacity: 0;
-    transform: translateY(24px);
-    transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
+    transform: translateY(20px);
+    transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
   }
   .reveal.visible {
     opacity: 1;
@@ -82,35 +89,11 @@
   .reveal-delay-2 { transition-delay: 0.2s; }
   .reveal-delay-3 { transition-delay: 0.3s; }
   .reveal-delay-4 { transition-delay: 0.4s; }
-  .text-gradient {
-    background: linear-gradient(135deg, #E8E8ED 0%, #1F4A9A 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-  .btn-shine {
-    position: relative;
-    overflow: hidden;
-  }
-  .btn-shine::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-    transform: translateX(-100%);
-    transition: transform 0.5s ease;
-  }
-  .btn-shine:hover::after {
-    transform: translateX(100%);
-  }
   @media (prefers-reduced-motion: reduce) {
     .reveal {
       opacity: 1;
       transform: none;
       transition: none;
-    }
-    .btn-shine::after {
-      display: none;
     }
     *, *::before, *::after {
       animation-duration: 0.01ms !important;

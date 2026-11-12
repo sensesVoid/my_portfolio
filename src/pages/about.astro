@@ -1,30 +1,28 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import Hero from '@/components/Hero.astro';
 import Portrait from '@/components/Portrait.astro';
 import Timeline from '@/components/Timeline.astro';
 import Badge from '@/components/Badge.astro';
-import ScrollReveal from '@/components/ScrollReveal.astro';
 import { getEntry } from 'astro:content';
 
 const page = await getEntry('pages', 'about');
 
 const experience = [
-  { period: 'Sep 2025 – Present', role: 'Content Moderator', company: 'Tech Mahindra Philippines', highlights: ['Major social platform, US-focused moderation', 'Policy enforcement at scale'] },
-  { period: 'Nov 2023 – Mar 2025', role: 'Email & Text FinTech Support', company: 'ECE Philippines', highlights: ['Albert financial technology app', '115% TPH target, 65% CSAT, 78% quality'] },
-  { period: 'Aug 2023 – Oct 2023', role: 'Customer Service Representative', company: 'Eperformax Philippines', highlights: ['T-Mobile inbound support', '95% CSAT, 50% NPS, <20 min AHT'] },
-  { period: '2 years', role: 'Quality Analyst', company: 'Wipro BPO Philippines', highlights: ['Policy evaluation & QA calibration', 'Knowledge base → 100% site quality score'] },
-  { period: 'Apr 2019 – Aug 2023', role: 'Digital Content Specialist', company: 'Wipro BPO Philippines', highlights: ['Content review & policy enforcement', 'Automation project → 20% productivity gain'] },
-  { period: 'Mar–Apr 2019', role: 'Customer Service Rep (Seasonal)', company: 'Harte Hanks Philippines', highlights: ['WWE ticket orders & refunds'] },
-  { period: 'Jul–Nov 2018', role: 'Customer Care Associate I', company: 'Conduent Philippines', highlights: ['iPhone troubleshooting', 'Top Agent Sep: 105% prod, 98% quality, 90% CSAT'] },
-  { period: 'Mar–Jun 2018', role: 'Customer Service Rep', company: 'Teleperformance Philippines', highlights: ['Xbox support & refunds'] },
-  { period: 'Oct 2017 – Jan 2018', role: 'Customer Care Rep I', company: 'Startek Philippines', highlights: ['Xfinity phone/internet/gift checks'] },
-  { period: 'Jun–Sep 2017', role: 'Technical Support Rep', company: 'Alorica / West Contact Services', highlights: ['Comcast phone/internet/cable'] },
-  { period: 'Apr–May 2017', role: 'Customer Service Rep (Seasonal)', company: 'SPICRM', highlights: ['Mother\'s Day flower orders & refunds'] },
+  { period: 'Sep 2025 — Present', role: 'Content Moderator', company: 'Tech Mahindra Philippines', highlights: ['Major social platform, US-focused moderation', 'Policy enforcement at scale'] },
+  { period: 'Nov 2023 — Mar 2025', role: 'Email & Text FinTech Support', company: 'ECE Philippines', highlights: ['Albert financial technology app', '115% TPH target, 65% CSAT, 78% quality'] },
+  { period: 'Aug 2023 — Oct 2023', role: 'Customer Service Representative', company: 'Eperformax Philippines', highlights: ['T-Mobile inbound support', '95% CSAT, 50% NPS, under 20 min AHT'] },
+  { period: '2 years', role: 'Quality Analyst', company: 'Wipro BPO Philippines', highlights: ['Policy evaluation and QA calibration', 'Knowledge base earned 100% site quality score'] },
+  { period: 'Apr 2019 — Aug 2023', role: 'Digital Content Specialist', company: 'Wipro BPO Philippines', highlights: ['Content review and policy enforcement', 'Automation project delivered 20% productivity gain'] },
+  { period: 'Mar—Apr 2019', role: 'Customer Service Rep (Seasonal)', company: 'Harte Hanks Philippines', highlights: ['WWE ticket orders and refunds'] },
+  { period: 'Jul—Nov 2018', role: 'Customer Care Associate I', company: 'Conduent Philippines', highlights: ['iPhone troubleshooting', 'Top Agent Sep: 105% productivity, 98% quality, 90% CSAT'] },
+  { period: 'Mar—Jun 2018', role: 'Customer Service Rep', company: 'Teleperformance Philippines', highlights: ['Xbox support and refunds'] },
+  { period: 'Oct 2017 — Jan 2018', role: 'Customer Care Rep I', company: 'Startek Philippines', highlights: ['Xfinity phone, internet, gift checks'] },
+  { period: 'Jun—Sep 2017', role: 'Technical Support Rep', company: 'Alorica / West Contact Services', highlights: ['Comcast phone, internet, cable'] },
+  { period: 'Apr—May 2017', role: 'Customer Service Rep (Seasonal)', company: 'SPICRM', highlights: ['Mother\'s Day flower orders and refunds'] },
 ];
 
 const aiPeriod = [
-  { period: 'Mar–Sep 2025', role: 'AI Development Period', company: 'Self-Directed', highlights: ['SQAC — Portable LLM memory (HDC/VSA)', 'Pyralis — Sub-1B LLM on Kaggle T4', 'Wizky CLI — Rust + llama.cpp FFI', 'Agent harnesses: Hermes, OpenCode, Claude Code, Codex, Cline, Kilo, Freebuff, Antigravity', 'Independent research: Compact neuro-symbolic learning'] },
+  { period: 'Mar—Sep 2025', role: 'AI Development Period', company: 'Self-Directed', highlights: ['SQAC — Portable LLM memory (HDC/VSA)', 'Pyralis — Sub-1B LLM on Kaggle T4', 'Wizky CLI — Rust with llama.cpp FFI', 'Agent harnesses: Hermes, OpenCode, Claude Code, Codex, Cline, Kilo, Freebuff, Antigravity', 'Independent research: compact neuro-symbolic learning'] },
 ];
 
 const skills = {
@@ -44,7 +42,7 @@ const certifications = [
 ];
 
 const education = [
-  'B.S. Criminology (undergraduate coursework), Pamantasan ng Lungsod ng Muntinlupa, 2009–2013',
+  'B.S. Criminology (undergraduate coursework), Pamantasan ng Lungsod ng Muntinlupa, 2009—2013',
 ];
 
 const jsonLd = {
@@ -62,88 +60,75 @@ const jsonLd = {
 ---
 
 <BaseLayout title={page.data.title} description={page.data.description} jsonLd={jsonLd}>
-  <section class="section pt-20 lg:pt-28" aria-labelledby="about-hero">
+  <section class="section pt-24" aria-labelledby="about-hero">
     <div class="container-custom">
-      <div class="grid lg:grid-cols-[300px_1fr] gap-12 lg:gap-16 items-start">
-        {/* Portrait Sidebar */}
-        <aside class="lg:sticky lg:top-24 flex flex-col items-center text-center lg:text-left">
+      <div class="grid lg:grid-cols-[280px_1fr] gap-12 lg:gap-20 items-start">
+        <aside class="lg:sticky lg:top-24">
           <Portrait src="/Modern Dark Studio Portrait.png" alt="Gerald B. Aton — professional portrait" />
-          <div class="mt-6 w-full">
-            <h1 class="text-2xl sm:text-3xl font-bold text-brand-text mb-1">Gerald B. Aton</h1>
-            <p class="text-brand-muted mb-2">Pasay City, Philippines</p>
-            <p class="text-brand-accent text-sm font-medium mb-6">Content Moderation • US Support • AI Tooling</p>
-            <div class="flex flex-wrap justify-center lg:justify-start gap-3">
-              <a href="mailto:geraldaton20@gmail.com" class="btn-secondary text-sm" aria-label="Email">✉ Email</a>
-              <a href="https://linkedin.com/in/geraldaton" class="btn-secondary text-sm" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">⟶ LinkedIn</a>
-              <a href="https://github.com/sensesVoid" class="btn-secondary text-sm" target="_blank" rel="noopener noreferrer" aria-label="GitHub">⌘ GitHub</a>
+          <div class="mt-8">
+            <h1 class="font-display text-3xl font-medium text-brand-text mb-1">Gerald B. Aton</h1>
+            <p class="text-sm text-brand-muted mb-1">Pasay City, Philippines</p>
+            <p class="eyebrow mb-6">Content Moderation · US Support · AI Tooling</p>
+            <div class="flex flex-wrap gap-3 text-sm">
+              <a href="mailto:geraldaton20@gmail.com" class="text-brand-muted hover:text-brand-text transition-colors">Email</a>
+              <a href="https://linkedin.com/in/geraldaton" class="text-brand-muted hover:text-brand-text transition-colors" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+              <a href="https://github.com/sensesVoid" class="text-brand-muted hover:text-brand-text transition-colors" target="_blank" rel="noopener noreferrer">GitHub</a>
             </div>
           </div>
         </aside>
 
-        {/* Main Content */}
-        <div class="space-y-16">
-          <Hero {...page.data.hero} />
+        <div>
+          <p class="eyebrow mb-6">About</p>
+          <p class="font-display text-2xl sm:text-3xl font-medium text-brand-text leading-snug mb-12 max-w-2xl">
+            Content moderator, quality analyst, and customer support professional with eight years of experience. Self-directed AI builder behind SQAC, Pyralis, and Wizky.
+          </p>
 
-          <ScrollReveal delay={1} class="mb-16">
-            <section aria-labelledby="summary-heading">
-              <h2 id="summary-heading" class="text-2xl font-bold text-brand-text mb-4">Professional Summary</h2>
-              <p class="text-brand-muted leading-relaxed">
-                Content moderator, quality analyst and customer support professional with 8 years of experience in policy enforcement, US customer support, fintech, telecom and consumer technology. Proven results in quality, productivity and customer satisfaction, including a 20% productivity gain from an automation project and a policy knowledge base that earned a 100% site quality score. Self-directed AI builder, hands-on with AI agent harnesses, coding CLIs and local LLM tooling.
-              </p>
-            </section>
-          </ScrollReveal>
+          <section aria-labelledby="summary-heading" class="mb-16 border-t border-brand-border pt-10">
+            <p class="eyebrow mb-4">Summary</p>
+            <p class="text-brand-muted leading-relaxed max-w-2xl">
+              Content moderator, quality analyst and customer support professional with 8 years of experience in policy enforcement, US customer support, fintech, telecom and consumer technology. Proven results in quality, productivity and customer satisfaction, including a 20% productivity gain from an automation project and a policy knowledge base that earned a 100% site quality score. Self-directed AI builder, hands-on with AI agent harnesses, coding CLIs and local LLM tooling.
+            </p>
+          </section>
 
-          <ScrollReveal delay={2} class="mb-16">
-            <Timeline title="Professional Experience" items={experience} />
-          </ScrollReveal>
+          <section aria-labelledby="experience-heading" class="mb-16 border-t border-brand-border pt-10">
+            <p class="eyebrow mb-6">Experience</p>
+            <Timeline title="" items={experience} />
+          </section>
 
-          <ScrollReveal delay={3} class="mb-16">
-            <Timeline title="AI Development Period (Mar–Sep 2025)" items={aiPeriod} />
-          </ScrollReveal>
+          <section aria-labelledby="ai-period-heading" class="mb-16 border-t border-brand-border pt-10">
+            <p class="eyebrow mb-6">AI Development Period</p>
+            <Timeline title="" items={aiPeriod} />
+          </section>
 
-          <ScrollReveal delay={4} class="mb-16">
-            <section aria-labelledby="skills-heading">
-              <h2 id="skills-heading" class="text-2xl font-bold text-brand-text mb-6">Core Skills</h2>
-              <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {Object.entries(skills).map(([category, items]) => (
-                  <article key={category} class="card">
-                    <h3 class="text-sm font-semibold text-brand-accent uppercase tracking-wider mb-3">{category}</h3>
-                    <div class="flex flex-wrap gap-2">
-                      {items.map(skill => <Badge key={skill} variant="default">{skill}</Badge>)}
-                    </div>
-                  </article>
-                ))}
-              </div>
-            </section>
-          </ScrollReveal>
+          <section aria-labelledby="skills-heading" class="mb-16 border-t border-brand-border pt-10">
+            <p class="eyebrow mb-6">Core Skills</p>
+            <div class="grid sm:grid-cols-2 gap-8">
+              {Object.entries(skills).map(([category, items]) => (
+                <div key={category}>
+                  <h3 class="text-sm font-medium text-brand-text mb-3">{category}</h3>
+                  <p class="text-sm text-brand-muted leading-relaxed">{items.join(' · ')}</p>
+                </div>
+              ))}
+            </div>
+          </section>
 
-          <ScrollReveal delay={5} class="mb-16">
-            <section aria-labelledby="certifications-heading" class="space-y-8">
-              <h2 id="certifications-heading" class="text-2xl font-bold text-brand-text mb-4">Certifications</h2>
-              <ul class="space-y-2">
-                {certifications.map((cert, i) => (
-                  <li key={i} class="flex items-start gap-3 text-brand-muted">
-                    <span class="w-1.5 h-1.5 rounded-full bg-brand-accent mt-1.5 flex-shrink-0" aria-hidden="true" />
-                    {cert}
-                  </li>
-                ))}
-              </ul>
-            </section>
-          </ScrollReveal>
+          <section aria-labelledby="certifications-heading" class="mb-16 border-t border-brand-border pt-10">
+            <p class="eyebrow mb-6">Certifications</p>
+            <ul class="space-y-2">
+              {certifications.map((cert, i) => (
+                <li key={i} class="text-sm text-brand-muted">{cert}</li>
+              ))}
+            </ul>
+          </section>
 
-          <ScrollReveal delay={6}>
-            <section aria-labelledby="education-heading">
-              <h2 id="education-heading" class="text-2xl font-bold text-brand-text mb-4">Education</h2>
-              <ul class="space-y-2">
-                {education.map((edu, i) => (
-                  <li key={i} class="flex items-start gap-3 text-brand-muted">
-                    <span class="w-1.5 h-1.5 rounded-full bg-brand-accent mt-1.5 flex-shrink-0" aria-hidden="true" />
-                    {edu}
-                  </li>
-                ))}
-              </ul>
-            </section>
-          </ScrollReveal>
+          <section aria-labelledby="education-heading" class="border-t border-brand-border pt-10">
+            <p class="eyebrow mb-6">Education</p>
+            <ul class="space-y-2">
+              {education.map((edu, i) => (
+                <li key={i} class="text-sm text-brand-muted">{edu}</li>
+              ))}
+            </ul>
+          </section>
         </div>
       </div>
     </div>

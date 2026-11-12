@@ -1,47 +1,41 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Hero from '@/components/Hero.astro';
-import ServiceCard from '@/components/ServiceCard.astro';
 import { getEntry } from 'astro:content';
-import Badge from '@/components/Badge.astro';
 
 const page = await getEntry('pages', 'services');
 
 const services = [
   {
     title: 'Trust & Safety Foundations',
-    target: 'Pre-seed → Series A',
-    scope: 'Policy framework design, moderation workflow setup, reviewer QA calibration, escalation paths, tooling selection',
-    outcomes: 'Launch-ready T&S ops in 4-6 weeks; measurable quality baseline',
-    icon: 'shield',
+    target: 'Pre-seed to Series A',
+    scope: 'Policy framework design, moderation workflow setup, reviewer QA calibration, escalation paths, tooling selection.',
+    outcomes: 'Launch-ready T&S operations in 4-6 weeks with a measurable quality baseline.',
   },
   {
     title: 'Support Operations & QA',
-    target: 'Seed → Series B',
-    scope: 'Queue design, SLA/SLO definition, QA scorecards, coaching programs, productivity tooling, fintech/telecom domain expertise',
-    outcomes: '15-30% TPH improvement; CSAT >90%; reduced escalation rate',
-    icon: 'users',
+    target: 'Seed to Series B',
+    scope: 'Queue design, SLA/SLO definition, QA scorecards, coaching programs, productivity tooling, fintech and telecom domain expertise.',
+    outcomes: '15-30% TPH improvement, CSAT above 90%, reduced escalation rate.',
   },
   {
     title: 'AI Automation & Tooling',
     target: 'Any stage',
-    scope: 'Custom agent workflows (OpenCode, Claude Code, Hermes), SQAC memory integration, local LLM deployment (llama.cpp/GGUF), RAG vs. memory architecture decisions',
-    outcomes: '50-90% context cost reduction; portable knowledge across models',
-    icon: 'cpu',
+    scope: 'Custom agent workflows, SQAC memory integration, local LLM deployment, RAG vs. memory architecture decisions.',
+    outcomes: '50-90% context cost reduction with portable knowledge across models.',
   },
   {
     title: 'Fractional QA Lead',
     target: 'Early-stage',
-    scope: 'Embedded QA leadership: hiring, calibration, process design, tooling, reporting',
-    outcomes: 'Self-sustaining QA function; knowledge transfer to internal hire',
-    icon: 'sparkles',
+    scope: 'Embedded QA leadership: hiring, calibration, process design, tooling, reporting.',
+    outcomes: 'A self-sustaining QA function with knowledge transfer to an internal hire.',
   },
 ];
 
 const engagementModels = [
-  { name: 'Discovery', description: 'Free 30-min call to understand your needs and scope the engagement', price: 'Free' },
-  { name: 'Project', description: 'Fixed-scope engagement, typically 4-8 weeks with clear deliverables', price: 'Fixed fee' },
-  { name: 'Retainer', description: 'Ongoing monthly engagement for continuous improvement and advisory', price: 'Monthly' },
+  { name: 'Discovery', description: 'Free 30-minute call to understand your needs and scope the engagement.', price: 'Free' },
+  { name: 'Project', description: 'Fixed-scope engagement, typically 4-8 weeks with clear deliverables.', price: 'Fixed fee' },
+  { name: 'Retainer', description: 'Ongoing monthly engagement for continuous improvement and advisory.', price: 'Monthly' },
 ];
 
 const jsonLd = {
@@ -50,15 +44,6 @@ const jsonLd = {
   name: 'Trust & Safety Consulting',
   provider: { '@type': 'Person', name: 'Gerald B. Aton' },
   areaServed: 'Worldwide',
-  hasOfferCatalog: {
-    '@type': 'OfferCatalog',
-    name: 'Consulting Services',
-    itemListElement: services.map((s, i) => ({
-      '@type': 'Offer',
-      position: i + 1,
-      itemOffered: { '@type': 'Service', name: s.title, description: s.scope },
-    })),
-  },
 };
 ---
 
@@ -67,34 +52,46 @@ const jsonLd = {
 
   <section class="section" aria-labelledby="services-heading">
     <div class="container-custom">
-      <header class="mb-12 text-center">
-        <h2 id="services-heading" class="text-2xl sm:text-3xl font-bold text-brand-text mb-2">Consulting Services</h2>
-        <p class="text-brand-muted max-w-2xl mx-auto">Each engagement starts with a free discovery call. No rate card — we agree on scope and value first.</p>
-      </header>
-      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {services.map(svc => (
-          <ServiceCard key={svc.title} {...svc} href="/contact" />
-        ))}
-      </div>
+      <p class="eyebrow mb-8">Services</p>
+      {services.map((svc, i) => (
+        <article class="group py-10 border-t border-brand-border last:border-b">
+          <div class="grid md:grid-cols-[80px_1fr_2fr] gap-6 md:gap-10 items-start">
+            <p class="font-mono text-sm text-brand-muted">{String(i + 1).padStart(2, '0')}</p>
+            <div>
+              <h3 class="font-display text-2xl font-medium text-brand-text mb-2 group-hover:text-brand-accent transition-colors">{svc.title}</h3>
+              <p class="eyebrow">{svc.target}</p>
+            </div>
+            <div class="space-y-4">
+              <p class="text-brand-muted leading-relaxed">{svc.scope}</p>
+              <p class="text-sm text-brand-text"><span class="text-brand-muted">Outcome — </span>{svc.outcomes}</p>
+            </div>
+          </div>
+        </article>
+      ))}
     </div>
   </section>
 
-  <section class="section bg-brand-elevated/50" aria-labelledby="engagement-heading">
+  <section class="section border-t border-brand-border" aria-labelledby="engagement-heading">
     <div class="container-custom">
-      <header class="mb-10 text-center">
-        <h2 id="engagement-heading" class="text-2xl sm:text-3xl font-bold text-brand-text mb-2">Engagement Models</h2>
-      </header>
-      <div class="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-        {engagementModels.map(model => (
-          <article key={model.name} class="card text-center">
-            <h3 class="text-xl font-semibold text-brand-text mb-2">{model.name}</h3>
-            <p class="text-brand-muted mb-4">{model.description}</p>
-            <div class="text-2xl font-bold text-brand-accent">{model.price}</div>
+      <div class="grid md:grid-cols-[240px_1fr] gap-8 md:gap-16 mb-12">
+        <div>
+          <p class="eyebrow mb-3">Engagement</p>
+          <h2 id="engagement-heading" class="font-display text-3xl sm:text-4xl font-medium text-brand-text">How we work</h2>
+        </div>
+        <p class="text-brand-muted max-w-xl self-end">Every engagement starts with a free discovery call. Scope and value are agreed before any commitment.</p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-0 border-t border-brand-border">
+        {engagementModels.map((model, i) => (
+          <article class="py-8 md:pr-8 md:border-r border-brand-border last:border-r-0 md:pl-8 first:pl-0">
+            <p class="font-mono text-sm text-brand-muted mb-3">{String(i + 1).padStart(2, '0')}</p>
+            <h3 class="font-display text-xl font-medium text-brand-text mb-2">{model.name}</h3>
+            <p class="text-sm text-brand-muted mb-4 leading-relaxed">{model.description}</p>
+            <p class="text-sm font-medium text-brand-accent">{model.price}</p>
           </article>
         ))}
       </div>
-      <div class="text-center mt-10">
-        <a href="/contact" class="btn-primary">Start with a Discovery Call →</a>
+      <div class="mt-12">
+        <a href="/contact" class="btn-primary">Start with a discovery call</a>
       </div>
     </div>
   </section>

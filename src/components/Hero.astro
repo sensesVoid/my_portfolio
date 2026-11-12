@@ -1,6 +1,5 @@
 ---
 import ScrollReveal from '@/components/ScrollReveal.astro';
-import Badge from '@/components/Badge.astro';
 interface Props {
   headline: string;
   subhead: string;
@@ -9,34 +8,38 @@ interface Props {
   badge?: string;
 }
 const { headline, subhead, ctaPrimary, ctaSecondary, badge } = Astro.props;
-// Split headline for gradient accent words (marked with ** in content)
-const headlineParts = headline.split('**').map((part, i) => ({ text: part, isAccent: i % 2 === 1 }));
+// Support **accent** markers: render as accent-colored spans
+const raw = headline.split('**');
+const parts = [];
+raw.forEach((text, i) => {
+  if (text.length === 0) return;
+  parts.push({ text, accent: i % 2 === 1 });
+});
 ---
-<section class="section pt-20 lg:pt-28 relative overflow-hidden" aria-labelledby="hero-heading">
+<section class="section pt-24 lg:pt-32" aria-labelledby="hero-heading">
   <div class="container-custom">
-    <div class="max-w-3xl relative z-10">
+    <div class="max-w-4xl">
       {badge && (
-        <ScrollReveal delay={0} class="mb-6 inline-block">
-          <span class="badge badge-available px-4 py-1.5 text-sm">{badge}</span>
+        <ScrollReveal delay={0} class="mb-8">
+          <p class="eyebrow">{badge}</p>
         </ScrollReveal>
       )}
-      <h1 id="hero-heading" class="font-display text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight text-brand-text mb-6 leading-[1.1]">
-        {headlineParts.map((part, i) => (
-          <ScrollReveal key={i} delay={1} class="inline-block">
-            {part.isAccent ? <span class="text-gradient">{part.text}</span> : part.text}
+      <h1 id="hero-heading" class="font-display text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-medium leading-[1.02] tracking-tight text-brand-text mb-8">
+        {parts.map((part, i) => (
+          <ScrollReveal key={i} delay={1} class="inline">
+            {part.accent ? <em class="not-italic text-brand-accent">{part.text}</em> : part.text}
           </ScrollReveal>
         ))}
       </h1>
-      <ScrollReveal delay={2} class="mb-8">
+      <ScrollReveal delay={2} class="mb-10">
         <p class="text-lg sm:text-xl text-brand-muted max-w-2xl leading-relaxed">{subhead}</p>
       </ScrollReveal>
-      <ScrollReveal delay={3} class="flex flex-col sm:flex-row gap-4">
-        <a href={ctaPrimary.href} class="btn-primary btn-shine w-full sm:w-auto relative overflow-hidden">
-          <span class="relative z-10">{ctaPrimary.text}</span>
-          <span class="absolute inset-0 bg-brand-accent-hover opacity-0 hover:opacity-100 transition-opacity duration-300" aria-hidden="true" />
-        </a>
+      <ScrollReveal delay={3} class="flex flex-col sm:flex-row sm:items-center gap-6">
+        <a href={ctaPrimary.href} class="btn-primary">{ctaPrimary.text}</a>
         {ctaSecondary && (
-          <a href={ctaSecondary.href} class="btn-secondary w-full sm:w-auto"> {ctaSecondary.text} </a>
+          <a href={ctaSecondary.href} class="text-sm text-brand-muted hover:text-brand-text transition-colors inline-flex items-center gap-2">
+            {ctaSecondary.text} <span aria-hidden="true">→</span>
+          </a>
         )}
       </ScrollReveal>
     </div>
