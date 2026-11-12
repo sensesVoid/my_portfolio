@@ -223,11 +223,16 @@ const jsonLd = {
       <div class="mt-12">
         <p class="eyebrow mb-4">How we work</p>
         <div class="grid sm:grid-cols-4 gap-6">
-          {['Discover', 'Scope', 'Deliver', 'Handoff'].map((step, i) => (
-            <div key={step}>
+          {[
+            { step: 'Discover', desc: 'Understand your current operations, metrics, and gaps.' },
+            { step: 'Scope', desc: 'Agree on deliverables, timeline, and success criteria.' },
+            { step: 'Deliver', desc: 'Implement process changes and the tooling to support them.' },
+            { step: 'Handoff', desc: 'Document, train, and transfer ownership so it survives.' },
+          ].map((item, i) => (
+            <div key={item.step}>
               <p class="font-mono text-sm text-brand-muted mb-2">{String(i + 1).padStart(2, '0')}</p>
-              <p class="font-display text-lg font-medium text-brand-text">{step}</p>
-              <p class="text-sm text-brand-muted mt-1">TODO: one-line description</p>
+              <p class="font-display text-lg font-medium text-brand-text">{item.step}</p>
+              <p class="text-sm text-brand-muted mt-1">{item.desc}</p>
             </div>
           ))}
         </div>
@@ -283,21 +288,21 @@ const jsonLd = {
 
         <div class="space-y-6">
           <div class="flex items-center gap-3">
-            <Icon name="mail" size={20} />
+            <Icon name="mail" size={24} class="text-brand-accent" />
             <div>
               <p class="eyebrow mb-1">Email</p>
               <a href="mailto:geraldaton20@gmail.com" class="text-brand-text hover:text-brand-accent transition-colors">geraldaton20@gmail.com</a>
             </div>
           </div>
           <div class="flex items-center gap-3">
-            <Icon name="linkedin" size={20} />
+            <Icon name="linkedin" size={24} class="text-brand-accent" />
             <div>
               <p class="eyebrow mb-1">LinkedIn</p>
               <a href="https://linkedin.com/in/geraldaton" target="_blank" rel="noopener noreferrer" class="text-brand-text hover:text-brand-accent transition-colors">linkedin.com/in/geraldaton</a>
             </div>
           </div>
           <div class="flex items-center gap-3">
-            <Icon name="github" size={20} />
+            <Icon name="github" size={24} class="text-brand-accent" />
             <div>
               <p class="eyebrow mb-1">GitHub</p>
               <a href="https://github.com/sensesVoid" target="_blank" rel="noopener noreferrer" class="text-brand-text hover:text-brand-accent transition-colors">github.com/sensesVoid</a>
