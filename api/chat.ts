@@ -2,6 +2,11 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 
 const PORTFOLIO_CONTEXT = `Gerald B. Aton — Trust & Safety consultant, 8 years content moderation/QA/US support. Built SQAC (portable LLM memory), Jamukot (web music player), Dococ (paper-first autonomous trading system). Available for consulting: T&S foundations, Support Ops & QA, AI Automation, Fractional QA Lead.`;
 
+// Best-effort in-memory rate limit (per warm instance)
+const rateMap = new Map<string, { count: number; reset: number }>();
+const RATE_WINDOW_MS = 60_000;
+const RATE_MAX = 8;
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method === 'OPTIONS') {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -18,6 +23,37 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(400).json({ error: 'Missing messages' });
   }
 
+  // Basic abuse protection
+  const MAX_MSG_LEN = 300;
+  const MAX_MESSAGES = 6;
+  const sanitized = messages
+    .slice(-MAX_MESSAGES)
+    .map((m: any) => ({
+      role: m?.role === 'user' ? 'user' : 'assistant',
+      content: typeof m?.content === 'string' ? m.content.slice(0, MAX_MSG_LEN) : '',
+    }))
+    .filter((m: any) => m.content.trim().length > 0);
+
+  if (sanitized.length === 0) {
+    return res.status(400).json({ error: 'Invalid messages' });
+  }
+  if (sanitized.some((m: any) => m.content.length > MAX_MSG_LEN)) {
+    return res.status(400).json({ error: 'Message too long' });
+  }
+
+  // Rate limit (best-effort)
+  const ip = (req.headers['x-forwarded-for'] as string)?.split(',')[0]?.trim() || req.socket?.remoteAddress || 'unknown';
+  const now = Date.now();
+  const entry = rateMap.get(ip);
+  if (!entry || now > entry.reset) {
+    rateMap.set(ip, { count: 1, reset: now + RATE_WINDOW_MS });
+  } else {
+    entry.count += 1;
+    if (entry.count > RATE_MAX) {
+      return res.status(429).send('Too many messages. Please wait a minute and try again.');
+    }
+  }
+
   const accountId = process.env.CLOUDFLARE_ACCOUNT_ID;
   const apiToken = process.env.CLOUDFLARE_API_TOKEN;
   if (!accountId || !apiToken) {
@@ -26,7 +62,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   const systemPrompt = `You are Gerald's AI assistant on his portfolio site. Context: ${PORTFOLIO_CONTEXT} Answer questions about Gerald's experience, services, projects (SQAC, Jamukot, Dococ), and consulting offerings. Be helpful, concise, and professional. If unsure, suggest booking a discovery call.`;
 
-  const allMessages = [{ role: 'system', content: systemPrompt }, ...messages.slice(-10)];
+  const allMessages = [{ role: 'system', content: systemPrompt }, ...sanitized.slice(-6)];
 
   try {
     const cfRes = await fetch(
