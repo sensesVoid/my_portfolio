@@ -27,9 +27,9 @@ const siteUrl = url || Astro.site?.toString() || 'https://portfolio-weld-sigma-1
     <ThemeScript />
   </head>
   <body class="min-h-screen flex flex-col relative bg-brand-bg">
-    <div class="absolute inset-0 -z-20" aria-hidden="true">
-      <img src="/Modern Dark Studio Portrait.png" alt="" class="w-full h-full object-cover object-center opacity-45 -scale-x-100" />
-      <div class="absolute inset-0 bg-gradient-to-b from-brand-bg/20 via-brand-bg/60 to-brand-bg"></div>
+    <div class="absolute top-0 left-0 w-full -z-20" aria-hidden="true">
+      <img src="/Modern Dark Studio Portrait.png" alt="" class="w-full h-auto object-contain object-right opacity-50 -scale-x-100" />
+      <div class="absolute inset-0 bg-gradient-to-b from-brand-bg/10 via-brand-bg/50 to-brand-bg"></div>
     </div>
     <BackgroundEffects />
     <Header />
