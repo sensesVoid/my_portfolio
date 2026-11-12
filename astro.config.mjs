@@ -4,7 +4,7 @@ import sitemap from '@astrojs/sitemap';
 import tailwind from '@astrojs/tailwind';
 
 export default defineConfig({
-  site: 'https://portfolio-weld-sigma-1l5rpojwjt.vercel.app',
+  site: 'https://gerald-aton.vercel.app',
   integrations: [mdx(), sitemap(), tailwind()],
   output: 'static',
   trailingSlash: 'always',
