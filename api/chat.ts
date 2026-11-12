@@ -1,11 +1,39 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
+import { kv } from '@vercel/kv';
 
 const PORTFOLIO_CONTEXT = `Gerald B. Aton — Trust & Safety consultant, 8 years content moderation/QA/US support. Built SQAC (portable LLM memory), Jamukot (web music player), Dococ (paper-first autonomous trading system). Available for consulting: T&S foundations, Support Ops & QA, AI Automation, Fractional QA Lead.`;
 
-// Best-effort in-memory rate limit (per warm instance)
-const rateMap = new Map<string, { count: number; reset: number }>();
-const RATE_WINDOW_MS = 60_000;
-const RATE_MAX = 8;
+const MAX_MSG_LEN = 300;
+const MAX_MESSAGES = 6;
+const PER_IP_PER_MIN = 8;
+const GLOBAL_PER_DAY = 150;
+
+async function checkLimits(ip: string): Promise<{ ok: boolean; message?: string }> {
+  try {
+    const now = Date.now();
+    const minuteKey = `chat:ip:${ip}:m:${Math.floor(now / 60000)}`;
+    const dayKey = `chat:global:d:${new Date().toISOString().slice(0, 10)}`;
+
+    const [minCount, dayCount] = await Promise.all([
+      kv.incr(minuteKey),
+      kv.incr(dayKey),
+    ]);
+
+    if (minCount === 1) await kv.expire(minuteKey, 90);
+    if (dayCount === 1) await kv.expire(dayKey, 60 * 60 * 26);
+
+    if (minCount > PER_IP_PER_MIN) {
+      return { ok: false, message: 'Too many messages. Please wait a minute and try again.' };
+    }
+    if (dayCount > GLOBAL_PER_DAY) {
+      return { ok: false, message: 'Daily chat limit reached. Please try again tomorrow or use the contact form.' };
+    }
+  } catch (e) {
+    // Fail open if KV is unavailable
+    console.error('KV rate limit error:', e);
+  }
+  return { ok: true };
+}
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method === 'OPTIONS') {
@@ -24,8 +52,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   // Basic abuse protection
-  const MAX_MSG_LEN = 300;
-  const MAX_MESSAGES = 6;
   const sanitized = messages
     .slice(-MAX_MESSAGES)
     .map((m: any) => ({
@@ -37,21 +63,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (sanitized.length === 0) {
     return res.status(400).json({ error: 'Invalid messages' });
   }
-  if (sanitized.some((m: any) => m.content.length > MAX_MSG_LEN)) {
-    return res.status(400).json({ error: 'Message too long' });
-  }
 
-  // Rate limit (best-effort)
+  // Global rate limit / daily quota via Vercel KV
   const ip = (req.headers['x-forwarded-for'] as string)?.split(',')[0]?.trim() || req.socket?.remoteAddress || 'unknown';
-  const now = Date.now();
-  const entry = rateMap.get(ip);
-  if (!entry || now > entry.reset) {
-    rateMap.set(ip, { count: 1, reset: now + RATE_WINDOW_MS });
-  } else {
-    entry.count += 1;
-    if (entry.count > RATE_MAX) {
-      return res.status(429).send('Too many messages. Please wait a minute and try again.');
-    }
+  const limit = await checkLimits(ip);
+  if (!limit.ok) {
+    return res.status(429).send(limit.message || 'Too many requests.');
   }
 
   const accountId = process.env.CLOUDFLARE_ACCOUNT_ID;
