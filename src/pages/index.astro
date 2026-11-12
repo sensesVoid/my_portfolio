@@ -2,6 +2,7 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import ScrollReveal from '@/components/ScrollReveal.astro';
 import Timeline from '@/components/Timeline.astro';
+import Icon from '@/components/Icon.astro';
 import { getCollection } from 'astro:content';
 
 const projects = await getCollection('projects');
@@ -281,17 +282,26 @@ const jsonLd = {
         </div>
 
         <div class="space-y-6">
-          <div>
-            <p class="eyebrow mb-3">Email</p>
-            <a href="mailto:geraldaton20@gmail.com" class="text-brand-text hover:text-brand-accent transition-colors">geraldaton20@gmail.com</a>
+          <div class="flex items-center gap-3">
+            <Icon name="mail" size={20} />
+            <div>
+              <p class="eyebrow mb-1">Email</p>
+              <a href="mailto:geraldaton20@gmail.com" class="text-brand-text hover:text-brand-accent transition-colors">geraldaton20@gmail.com</a>
+            </div>
           </div>
-          <div>
-            <p class="eyebrow mb-3">LinkedIn</p>
-            <a href="https://linkedin.com/in/geraldaton" target="_blank" rel="noopener noreferrer" class="text-brand-text hover:text-brand-accent transition-colors">linkedin.com/in/geraldaton</a>
+          <div class="flex items-center gap-3">
+            <Icon name="linkedin" size={20} />
+            <div>
+              <p class="eyebrow mb-1">LinkedIn</p>
+              <a href="https://linkedin.com/in/geraldaton" target="_blank" rel="noopener noreferrer" class="text-brand-text hover:text-brand-accent transition-colors">linkedin.com/in/geraldaton</a>
+            </div>
           </div>
-          <div>
-            <p class="eyebrow mb-3">GitHub</p>
-            <a href="https://github.com/sensesVoid" target="_blank" rel="noopener noreferrer" class="text-brand-text hover:text-brand-accent transition-colors">github.com/sensesVoid</a>
+          <div class="flex items-center gap-3">
+            <Icon name="github" size={20} />
+            <div>
+              <p class="eyebrow mb-1">GitHub</p>
+              <a href="https://github.com/sensesVoid" target="_blank" rel="noopener noreferrer" class="text-brand-text hover:text-brand-accent transition-colors">github.com/sensesVoid</a>
+            </div>
           </div>
           <div class="border-t border-brand-border pt-6">
             <p class="eyebrow mb-3">Availability</p>
