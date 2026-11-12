@@ -82,7 +82,7 @@ const jsonLd = {
       </div>
       <div class="grid md:grid-cols-3 gap-0 border-t border-brand-border">
         {engagementModels.map((model, i) => (
-          <article class="py-8 md:pr-8 md:border-r border-brand-border last:border-r-0 md:pl-8 first:pl-0">
+          <article class="py-8 md:pr-8 md:pl-8 first:pl-0 last:pr-0">
             <p class="font-mono text-sm text-brand-muted mb-3">{String(i + 1).padStart(2, '0')}</p>
             <h3 class="font-display text-xl font-medium text-brand-text mb-2">{model.name}</h3>
             <p class="text-sm text-brand-muted mb-4 leading-relaxed">{model.description}</p>
