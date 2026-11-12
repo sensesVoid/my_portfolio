@@ -9,7 +9,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   // Honeypot spam check
   if (_gotcha) {
-    return res.status(200).redirect('/contact?success=1');
+    return res.status(200).json({ success: true });
   }
 
   // Basic validation
@@ -23,8 +23,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   // In production, send email via Resend/SendGrid/nodemailer
-  // For now, log and redirect success
+  // For now, log and return success
   console.log('Contact form submission:', { name, email, company, service, message });
 
-  return res.status(200).redirect('/contact?success=1');
+  return res.status(200).json({ success: true });
 }

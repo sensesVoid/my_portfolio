@@ -7,6 +7,7 @@ import { getCollection } from 'astro:content';
 const projects = await getCollection('projects');
 const featuredProject = projects.find(p => p.data.featured);
 const otherProjects = projects.filter(p => !p.data.featured);
+const scheduleUrl = import.meta.env.PUBLIC_CALENDLY_URL || '#contact';
 
 const experience = [
   { period: 'Sep 2025 — Present', role: 'Content Moderator', company: 'Tech Mahindra Philippines', highlights: ['Major social platform, US-focused moderation'] },
@@ -17,10 +18,30 @@ const experience = [
 ];
 
 const services = [
-  { title: 'Trust & Safety Foundations', description: 'Policy frameworks, moderation pipelines, QA programs from scratch.' },
-  { title: 'Support Operations & QA', description: 'Fintech and consumer support scaling, productivity optimization, CSAT improvement.' },
-  { title: 'AI Automation & Tooling', description: 'Custom agent workflows, SQAC integration, local LLM deployment.' },
-  { title: 'Fractional QA Lead', description: 'Embedded QA leadership: hiring, calibration, process design, reporting.' },
+  {
+    title: 'Trust & Safety Foundations',
+    description: 'Policy frameworks, moderation pipelines, QA programs from scratch.',
+    bullets: ['Policy framework and escalation paths', 'Moderation workflow and reviewer QA calibration', 'Tooling selection and quality baseline'],
+    engagement: 'TODO: typical engagement length and format',
+  },
+  {
+    title: 'Support Operations & QA',
+    description: 'Fintech and consumer support scaling, productivity optimization, CSAT improvement.',
+    bullets: ['Queue design and SLA/SLO definition', 'QA scorecards and coaching programs', 'Productivity tooling and domain expertise'],
+    engagement: 'TODO: typical engagement length and format',
+  },
+  {
+    title: 'AI Automation & Tooling',
+    description: 'Custom agent workflows, SQAC integration, local LLM deployment.',
+    bullets: ['Custom agent workflows and SQAC integration', 'Local LLM deployment (llama.cpp/GGUF)', 'RAG vs. memory architecture decisions'],
+    engagement: 'TODO: typical engagement length and format',
+  },
+  {
+    title: 'Fractional QA Lead',
+    description: 'Embedded QA leadership: hiring, calibration, process design, reporting.',
+    bullets: ['Hiring and calibration programs', 'Process design and tooling', 'Reporting and knowledge transfer'],
+    engagement: 'TODO: typical engagement length and format',
+  },
 ];
 
 const jsonLd = {
@@ -28,7 +49,7 @@ const jsonLd = {
   '@type': 'Person',
   name: 'Gerald B. Aton',
   url: 'https://myportfolio-theta-plum-30.vercel.app',
-  image: 'https://myportfolio-theta-plum-30.vercel.app/Modern Dark Studio Portrait.png',
+  image: 'https://portfolio-weld-sigma-1l5rpojwjt.vercel.app/gerald-aton-portrait.png',
   sameAs: ['https://linkedin.com/in/geraldaton', 'https://github.com/sensesVoid'],
   jobTitle: 'Trust & Safety Consultant',
   worksFor: { '@type': 'Organization', name: 'Independent' },
@@ -55,8 +76,11 @@ const jsonLd = {
           </p>
         </ScrollReveal>
         <ScrollReveal delay={3}>
-          <p class="text-lg text-brand-muted max-w-xl leading-relaxed mb-8">
-            8 years scaling content moderation, QA, and US customer support. I build the tooling your team wishes existed — like SQAC, a portable memory layer for LLMs.
+          <p class="text-lg text-brand-muted max-w-xl leading-relaxed mb-4">
+            I help early-stage startups build Trust & Safety and support operations that scale — and I build the AI tooling that makes those teams faster.
+          </p>
+          <p class="text-sm text-brand-muted max-w-xl leading-relaxed mb-8">
+            The AI work (SQAC, agent harnesses) is built to support T&S teams with portable memory, faster review, and lower context cost.
           </p>
         </ScrollReveal>
         <ScrollReveal delay={4}>
@@ -64,17 +88,16 @@ const jsonLd = {
             <span>8 yrs T&S / Support</span>
             <span>·</span>
             <span>100% site quality (Wipro KB)</span>
-            <span>·</span>
-            <span>20% productivity gain</span>
-            <span>·</span>
-            <span>95% CSAT (T-Mobile)</span>
           </div>
         </ScrollReveal>
         <ScrollReveal delay={5}>
           <div class="flex flex-col sm:flex-row gap-4">
-            <a href="#contact" class="btn-primary">Book a discovery call</a>
+            <a href={scheduleUrl} class="btn-primary">Book a discovery call</a>
             <a href="#projects" class="text-sm text-brand-muted hover:text-brand-text transition-colors inline-flex items-center gap-2 self-center">
               View work <span aria-hidden="true">→</span>
+            </a>
+            <a href="/resume.pdf" class="text-sm text-brand-muted hover:text-brand-text transition-colors inline-flex items-center gap-2 self-center" download>
+              Download resume (PDF) <span aria-hidden="true">↓</span>
             </a>
           </div>
         </ScrollReveal>
@@ -99,6 +122,9 @@ const jsonLd = {
           <p class="text-brand-muted leading-relaxed">
             Content moderator, quality analyst and customer support professional with 8 years of experience in policy enforcement, US customer support, fintech, telecom and consumer technology. Proven results in quality, productivity and customer satisfaction, including a 20% productivity gain from an automation project and a policy knowledge base that earned a 100% site quality score. Self-directed AI builder, hands-on with AI agent harnesses, coding CLIs and local LLM tooling.
           </p>
+          <p class="text-brand-muted leading-relaxed mt-4">
+            I work by embedding with a team, mapping the real workflow, and building the smallest tool or process change that moves a metric — then handing it off so it survives without me.
+          </p>
         </div>
         <div>
           <p class="eyebrow mb-4">Core skills</p>
@@ -118,6 +144,8 @@ const jsonLd = {
       <div class="mt-16">
         <p class="eyebrow mb-6">Experience</p>
         <Timeline title="" items={experience} />
+        <p class="text-xs text-brand-muted mt-6">Legend: TPH = transactions per hour; AHT = average handle time; CSAT = customer satisfaction; NPS = net promoter score.</p>
+        <p class="text-xs text-brand-muted mt-2">TODO: confirm exact dates for the Quality Analyst / Digital Content Specialist overlap at Wipro.</p>
       </div>
     </div>
   </section>
@@ -151,6 +179,11 @@ const jsonLd = {
             <a href={`/projects/${p.slug}`} class="text-sm text-brand-muted hover:text-brand-text transition-colors">View →</a>
           </div>
         ))}
+        <div class="py-8 border-b border-brand-border">
+          <p class="eyebrow mb-2">Case study (TODO)</p>
+          <h3 class="font-display text-2xl font-medium text-brand-text mb-2">Trust & Safety workflow sample</h3>
+          <p class="text-brand-muted mb-3 max-w-2xl">TODO: sanitized sample (policy framework, QA scorecard, or moderation workflow). No confidential employer details.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -169,10 +202,32 @@ const jsonLd = {
         {services.map((svc, i) => (
           <div class="grid md:grid-cols-[80px_1fr_2fr] gap-6 md:gap-10 py-8 border-b border-brand-border items-start">
             <p class="font-mono text-sm text-brand-muted">{String(i + 1).padStart(2, '0')}</p>
-            <h3 class="font-display text-xl font-medium text-brand-text">{svc.title}</h3>
-            <p class="text-brand-muted leading-relaxed">{svc.description}</p>
+            <div>
+              <h3 class="font-display text-xl font-medium text-brand-text mb-2">{svc.title}</h3>
+              <p class="text-sm text-brand-muted mb-3">{svc.description}</p>
+              <p class="text-xs text-brand-muted">Typical engagement: {svc.engagement}</p>
+            </div>
+            <div>
+              <p class="eyebrow mb-3">What you get</p>
+              <ul class="space-y-1">
+                {svc.bullets.map(b => <li class="text-sm text-brand-muted leading-relaxed">{b}</li>)}
+              </ul>
+            </div>
           </div>
         ))}
+      </div>
+
+      <div class="mt-12">
+        <p class="eyebrow mb-4">How we work</p>
+        <div class="grid sm:grid-cols-4 gap-6">
+          {['Discover', 'Scope', 'Deliver', 'Handoff'].map((step, i) => (
+            <div key={step}>
+              <p class="font-mono text-sm text-brand-muted mb-2">{String(i + 1).padStart(2, '0')}</p>
+              <p class="font-display text-lg font-medium text-brand-text">{step}</p>
+              <p class="text-sm text-brand-muted mt-1">TODO: one-line description</p>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   </section>
@@ -216,6 +271,12 @@ const jsonLd = {
           </div>
           <button type="submit" class="btn-primary" id="submit-btn">Send message</button>
         </form>
+        <div id="form-success" class="hidden mt-4 p-4 rounded-md bg-brand-success/15 border border-brand-success/30 text-brand-success text-sm" role="alert" aria-live="polite">
+          Thanks. I'll respond within one business day.
+        </div>
+        <div id="form-error" class="hidden mt-4 p-4 rounded-md bg-red-500/15 border border-red-500/30 text-red-300 text-sm" role="alert" aria-live="polite">
+          Something went wrong. Please try again or email me directly.
+        </div>
 
         <div class="space-y-6">
           <div>
@@ -240,11 +301,89 @@ const jsonLd = {
   </section>
 
   <script is:inline>
-    const form = document.getElementById('contact-form');
-    const submitBtn = document.getElementById('submit-btn');
-    form?.addEventListener('submit', () => {
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Sending...';
-    });
+    (function() {
+      const form = document.getElementById('contact-form');
+      const submitBtn = document.getElementById('submit-btn');
+      const success = document.getElementById('form-success');
+      const error = document.getElementById('form-error');
+      if (!form) return;
+
+      function showError(field, msg) {
+        let el = form.querySelector('[data-error-for="' + field + '"]');
+        if (!el) {
+          el = document.createElement('p');
+          el.className = 'text-xs text-red-300 mt-1';
+          el.setAttribute('data-error-for', field);
+          const input = form.querySelector('#' + field);
+          input?.parentElement?.appendChild(el);
+        }
+        el.textContent = msg;
+      }
+      function clearError(field) {
+        const el = form.querySelector('[data-error-for="' + field + '"]');
+        if (el) el.textContent = '';
+      }
+
+      form.querySelectorAll('input, textarea, select').forEach(el => {
+        el.addEventListener('blur', () => {
+          if (el.hasAttribute('required') && !el.value.trim()) {
+            showError(el.id, 'This field is required.');
+          } else if (el.type === 'email' && el.value && !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(el.value)) {
+            showError(el.id, 'Enter a valid email.');
+          } else {
+            clearError(el.id);
+          }
+        });
+      });
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        success.classList.add('hidden');
+        error.classList.add('hidden');
+        // honeypot
+        const gotcha = form.querySelector('input[name="_gotcha"]');
+        if (gotcha && gotcha.value) return;
+
+        let valid = true;
+        form.querySelectorAll('[required]').forEach(el => {
+          if (!el.value.trim()) { showError(el.id, 'This field is required.'); valid = false; }
+          else clearError(el.id);
+        });
+        const email = form.querySelector('#email');
+        if (email && email.value && !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email.value)) {
+          showError('email', 'Enter a valid email.'); valid = false;
+        }
+        if (!valid) return;
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Sending...';
+        try {
+          const payload = {
+            name: form.querySelector('#name').value,
+            email: form.querySelector('#email').value,
+            company: form.querySelector('#company').value,
+            service: form.querySelector('#service').value,
+            message: form.querySelector('#message').value,
+            _gotcha: form.querySelector('input[name="_gotcha"]').value,
+          };
+          const res = await fetch('/api/contact', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+          });
+          if (res.ok) {
+            form.reset();
+            success.classList.remove('hidden');
+          } else {
+            error.classList.remove('hidden');
+          }
+        } catch (err) {
+          error.classList.remove('hidden');
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Send message';
+        }
+      });
+    })();
   </script>
 </BaseLayout>

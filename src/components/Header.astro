@@ -1,29 +1,61 @@
 ---
 import Icon from '@/components/Icon.astro';
+const onProject = Astro.url.pathname.startsWith('/projects');
+const home = onProject ? '/' : '';
 const navLinks = [
-  { href: '#about', label: 'About' },
-  { href: '#projects', label: 'Work' },
-  { href: '#services', label: 'Services' },
-  { href: '#contact', label: 'Contact' },
+  { href: `${home}#about`, label: 'About' },
+  { href: `${home}#projects`, label: 'Work' },
+  { href: `${home}#services`, label: 'Services' },
+  { href: `${home}#contact`, label: 'Contact' },
 ];
 ---
 <header class="sticky top-0 z-40 w-full border-b border-brand-border bg-brand-bg/90 backdrop-blur-md">
   <nav class="container-custom" aria-label="Main navigation">
     <div class="flex h-16 items-center justify-between">
-      <a href="#top" class="font-display text-lg font-medium text-brand-text hover:text-brand-accent transition-colors" aria-label="Gerald B. Aton — Home">
+      <a href={onProject ? '/' : '#top'} class="font-display text-lg font-medium text-brand-text hover:text-brand-accent transition-colors" aria-label="Gerald B. Aton — Home">
         Gerald B. Aton
       </a>
       <div class="hidden md:flex md:items-center md:gap-8">
         {navLinks.map(link => (
           <a href={link.href} class="text-sm text-brand-muted hover:text-brand-text transition-colors">{link.label}</a>
         ))}
-        <a href="#contact" class="text-sm font-medium text-brand-accent hover:text-brand-accent-hover transition-colors">
+        <a href={`${home}#contact`} class="text-sm font-medium text-brand-accent hover:text-brand-accent-hover transition-colors">
           Book a call →
         </a>
       </div>
-      <button class="md:hidden p-2 -mr-2 rounded-md hover:bg-brand-elevated transition-colors" aria-label="Toggle menu">
+      <button
+        id="mobile-menu-btn"
+        class="md:hidden p-3 -mr-2 rounded-md hover:bg-brand-elevated transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
+        aria-label="Toggle navigation menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
         <Icon name="menu" size={22} />
       </button>
     </div>
+    <div id="mobile-menu" class="hidden md:hidden pb-4" role="menu">
+      <div class="flex flex-col gap-2">
+        {navLinks.map(link => (
+          <a href={link.href} class="block py-3 text-sm text-brand-muted hover:text-brand-text transition-colors" role="menuitem">{link.label}</a>
+        ))}
+        <a href={`${home}#contact`} class="block py-2 text-sm font-medium text-brand-accent" role="menuitem">Book a call →</a>
+      </div>
+    </div>
   </nav>
 </header>
+<script is:inline>
+  (function() {
+    const btn = document.getElementById('mobile-menu-btn');
+    const menu = document.getElementById('mobile-menu');
+    if (!btn || !menu) return;
+    function open() { menu.classList.remove('hidden'); btn.setAttribute('aria-expanded','true'); }
+    function close() { menu.classList.add('hidden'); btn.setAttribute('aria-expanded','false'); btn.focus(); }
+    btn.addEventListener('click', () => {
+      if (menu.classList.contains('hidden')) open(); else close();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !menu.classList.contains('hidden')) close();
+    });
+    menu.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
+  })();
+</script>

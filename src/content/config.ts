@@ -29,6 +29,8 @@ const projects = defineCollection({
     tags: z.array(z.string()),
     startDate: z.string().optional(),
     endDate: z.string().optional(),
+    status: z.string().optional(),
+    outcome: z.string().optional(),
     hero: z.object({
       subtitle: z.string(),
       badges: z.array(z.string()),

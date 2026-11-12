@@ -7,20 +7,25 @@ interface Props {
   type?: 'website' | 'article';
   jsonLd?: Record<string, unknown>;
 }
-const { title, description, image, url, type = 'website', jsonLd } = Astro.props;
-const canonicalURL = url || Astro.site?.toString() || 'https://myportfolio-theta-plum-30.vercel.app';
-const ogImage = image || '/og-default.png';
+const { title, description, image, type = 'website', jsonLd } = Astro.props;
+const site = Astro.site ?? new URL('https://portfolio-weld-sigma-1l5rpojwjt.vercel.app');
+const canonicalURL = Astro.props.url
+  ? new URL(Astro.props.url, site)
+  : new URL(Astro.url.pathname, site);
+const ogImage = image
+  ? new URL(image, site).toString()
+  : new URL('/og.png', site).toString();
 ---
 <title>{title}</title>
 <meta name="description" content={description} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:type" content={type} />
-<meta property="og:url" content={canonicalURL} />
+<meta property="og:url" content={canonicalURL.toString()} />
 <meta property="og:image" content={ogImage} />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content={title} />
 <meta name="twitter:description" content={description} />
 <meta name="twitter:image" content={ogImage} />
-<link rel="canonical" href={canonicalURL} />
+<link rel="canonical" href={canonicalURL.toString()} />
 {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}

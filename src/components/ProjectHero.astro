@@ -20,7 +20,5 @@ const { title, subtitle, badges, links, stack } = Astro.props;
       {links.map(l => <a key={l.href} href={l.href} class="text-brand-text hover:text-brand-accent transition-colors" target="_blank" rel="noopener noreferrer">{l.text} →</a>)}
     </div>
   )}
-  {stack && stack.length > 0 && (
-    <p class="font-mono text-xs text-brand-muted">{stack.join(' · ')}</p>
-  )}
+  {/* Tech stack is shown via badges above; avoid duplicate list. */}
 </header>
