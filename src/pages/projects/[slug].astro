@@ -12,6 +12,7 @@ export async function getStaticPaths() {
 
 const { project } = Astro.props;
 const { data } = project;
+const { Content } = await project.render();
 const allProjects = await getCollection('projects');
 const idx = allProjects.findIndex(p => p.slug === project.slug);
 const nextProject = allProjects[(idx + 1) % allProjects.length];
@@ -36,7 +37,9 @@ const jsonLd = {
       <ProjectHero title={data.title} {...data.hero} stack={data.stack} />
       {data.status && <p class="eyebrow mb-8">Status: {data.status}{data.outcome ? ' — ' + data.outcome : ''}</p>}
       
-      <div class="prose prose-invert max-w-none" set:html={data.content || ''} />
+      <div class="prose prose-invert max-w-none">
+        <Content />
+      </div>
       
       {/* SQAC-specific deep-dive content */}
       {project.slug === 'sqac' && (
