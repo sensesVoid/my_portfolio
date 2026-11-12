@@ -38,7 +38,7 @@
 
 @layer components {
   .container-custom {
-    @apply mx-auto max-w-6xl px-6 sm:px-8 lg:px-10;
+    @apply mx-auto max-w-6xl px-6 sm:px-8 lg:px-10 border-x border-brand-border;
   }
   .section {
     @apply py-20 sm:py-28 lg:py-36;
