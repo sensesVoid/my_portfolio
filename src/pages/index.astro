@@ -282,10 +282,10 @@ const jsonLd = {
           </div>
           <button type="submit" class="btn-primary" id="submit-btn">Send message</button>
         </form>
-        <div id="form-success" class="hidden mt-4 p-4 rounded-md bg-brand-success/15 border border-brand-success/30 text-brand-success text-sm" role="alert" aria-live="polite">
-          Thanks. I'll respond within one business day.
+        <div id="form-success" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 hidden px-4 py-3 rounded-md bg-brand-elevated border border-brand-success/40 text-brand-success text-sm shadow-lg" role="status" aria-live="polite">
+          Message sent — I'll respond within one business day.
         </div>
-        <div id="form-error" class="hidden mt-4 p-4 rounded-md bg-red-500/15 border border-red-500/30 text-red-300 text-sm" role="alert" aria-live="polite">
+        <div id="form-error" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 hidden px-4 py-3 rounded-md bg-brand-elevated border border-red-500/40 text-red-300 text-sm shadow-lg" role="alert" aria-live="assertive">
           Something went wrong. Please try again or email me directly.
         </div>
 
@@ -356,6 +356,15 @@ const jsonLd = {
         });
       });
 
+      let toastTimer;
+      function showToast(el, ms = 4000) {
+        clearTimeout(toastTimer);
+        success.classList.add('hidden');
+        error.classList.add('hidden');
+        el.classList.remove('hidden');
+        toastTimer = setTimeout(() => el.classList.add('hidden'), ms);
+      }
+
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
         success.classList.add('hidden');
@@ -388,14 +397,14 @@ const jsonLd = {
           const result = await res.json();
           if (result.success) {
             form.reset();
-            success.classList.remove('hidden');
+            showToast(success, 4000);
           } else {
             console.error('Web3Forms error:', result);
-            error.classList.remove('hidden');
+            showToast(error, 5000);
           }
         } catch (err) {
           console.error('Submit error:', err);
-          error.classList.remove('hidden');
+          showToast(error, 5000);
         } finally {
           submitBtn.disabled = false;
           submitBtn.textContent = 'Send message';
