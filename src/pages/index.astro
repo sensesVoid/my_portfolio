@@ -8,7 +8,6 @@ import { getCollection } from 'astro:content';
 const projects = await getCollection('projects');
 const featuredProject = projects.find(p => p.data.featured);
 const otherProjects = projects.filter(p => !p.data.featured);
-const scheduleUrl = import.meta.env.PUBLIC_CALENDLY_URL || '#contact';
 
 const experience = [
   { period: 'Sep 2025 — Present', role: 'Content Moderator', company: 'Tech Mahindra Philippines', highlights: ['Major social platform, US-focused moderation'] },
@@ -18,30 +17,26 @@ const experience = [
   { period: 'Apr 2019 — Aug 2023', role: 'Digital Content Specialist', company: 'Wipro BPO Philippines', highlights: ['Content review · Automation → 20% productivity gain'] },
 ];
 
-const services = [
+const focusAreas = [
   {
-    title: 'Trust & Safety Foundations',
-    description: 'Policy frameworks, moderation pipelines, QA programs from scratch.',
-    bullets: ['Policy framework and escalation paths', 'Moderation workflow and reviewer QA calibration', 'Tooling selection and quality baseline'],
-    engagement: 'TODO: typical engagement length and format',
+    title: 'Content Moderation & Policy Enforcement',
+    description: 'Day-to-day policy enforcement across social platforms, marketplaces, and consumer tech at scale.',
+    bullets: ['Review and enforce policies on user-generated content', 'Calibrate reviewers and maintain quality baselines', 'Define escalation paths and QA programs'],
+  },
+  {
+    title: 'Trust & Safety Operations',
+    description: 'Operating frameworks that keep a platform safe as it scales.',
+    bullets: ['Policy framework design and iteration', 'Moderation workflow and tooling selection', 'KYC/AML review operations and GDPR compliance'],
+  },
+  {
+    title: 'AI Training, RLHF & Red Teaming',
+    description: 'Preparing and evaluating data and models that make AI systems safer.',
+    bullets: ['Human feedback (RLHF) labeling and ranking', 'Adversarial testing and red teaming', 'Safety evaluation and policy alignment'],
   },
   {
     title: 'Support Operations & QA',
-    description: 'Fintech and consumer support scaling, productivity optimization, CSAT improvement.',
-    bullets: ['Queue design and SLA/SLO definition', 'QA scorecards and coaching programs', 'Productivity tooling and domain expertise'],
-    engagement: 'TODO: typical engagement length and format',
-  },
-  {
-    title: 'AI Automation & Tooling',
-    description: 'Custom agent workflows, SQAC integration, local LLM deployment.',
-    bullets: ['Custom agent workflows and SQAC integration', 'Local LLM deployment (llama.cpp/GGUF)', 'RAG vs. memory architecture decisions'],
-    engagement: 'TODO: typical engagement length and format',
-  },
-  {
-    title: 'Fractional QA Lead',
-    description: 'Embedded QA leadership: hiring, calibration, process design, reporting.',
-    bullets: ['Hiring and calibration programs', 'Process design and tooling', 'Reporting and knowledge transfer'],
-    engagement: 'TODO: typical engagement length and format',
+    description: 'Fintech and consumer support operations built for quality and productivity.',
+    bullets: ['Queue design and SLA/SLO definition', 'QA scorecards and coaching programs', 'Productivity tooling and process improvement'],
   },
 ];
 
@@ -52,19 +47,18 @@ const jsonLd = {
   url: 'https://gerald-aton.vercel.app',
   image: 'https://gerald-aton.vercel.app/gerald-aton-portrait.jpg',
   sameAs: ['https://linkedin.com/in/geraldaton', 'https://github.com/sensesVoid'],
-  jobTitle: 'Trust & Safety Consultant',
-  worksFor: { '@type': 'Organization', name: 'Independent' },
-  knowsAbout: ['Content Moderation', 'Quality Assurance', 'Customer Support Operations', 'AI Agent Harnesses', 'LLM Memory Systems'],
+  jobTitle: 'Trust & Safety Operations Specialist',
+  knowsAbout: ['Content Moderation', 'Policy Enforcement', 'Quality Assurance', 'KYC/AML Operations', 'GDPR Compliance', 'RLHF', 'AI Red Teaming', 'LLM Memory Systems'],
 };
 ---
 
-<BaseLayout title="Gerald B. Aton — Trust & Safety + AI Automation" description="Trust & Safety operations, content moderation, and AI tooling for early-stage startups. 8 years of experience." jsonLd={jsonLd}>
+<BaseLayout title="Gerald B. Aton — Trust & Safety Operations" description="Trust & Safety operations professional with 8 years in content moderation, policy enforcement, KYC/AML, GDPR compliance, and AI training (RLHF/red teaming). Open to full-time roles." jsonLd={jsonLd}>
   <!-- Hero -->
   <section id="top" class="relative min-h-screen flex items-center" aria-labelledby="hero-heading">
     <div class="relative max-w-7xl mx-0 px-2 sm:px-3 lg:px-4 py-24">
       <div class="max-w-2xl">
         <ScrollReveal delay={0}>
-          <p class="eyebrow mb-6">Available for consulting</p>
+          <p class="eyebrow mb-6">Open to Trust & Safety roles</p>
         </ScrollReveal>
         <ScrollReveal delay={1}>
           <h1 id="hero-heading" class="font-display text-5xl sm:text-6xl lg:text-7xl font-medium leading-[1.02] tracking-tight text-brand-text mb-6">
@@ -73,15 +67,15 @@ const jsonLd = {
         </ScrollReveal>
         <ScrollReveal delay={2}>
           <p class="font-display text-2xl sm:text-3xl text-brand-accent mb-6 leading-snug">
-            Trust & Safety Operations + AI Automation
+            Trust & Safety Operations
           </p>
         </ScrollReveal>
         <ScrollReveal delay={3}>
           <p class="text-lg text-brand-muted max-w-xl leading-relaxed mb-4">
-            I help early-stage startups build Trust & Safety and support operations that scale — and I build the AI tooling that makes those teams faster.
+            Content moderation, policy enforcement, KYC/AML operations, and AI training (RLHF, red teaming). Eight years building safer platforms and support operations.
           </p>
           <p class="text-sm text-brand-muted max-w-xl leading-relaxed mb-8">
-            The AI work (SQAC, agent harnesses) is built to support T&S teams with portable memory, faster review, and lower context cost.
+            Open to full-time Trust & Safety roles — on-site, hybrid, or remote across US, EU, and APAC time zones.
           </p>
         </ScrollReveal>
         <ScrollReveal delay={4}>
@@ -93,12 +87,12 @@ const jsonLd = {
         </ScrollReveal>
         <ScrollReveal delay={5}>
           <div class="flex flex-col sm:flex-row gap-4">
-            <a href={scheduleUrl} class="btn-primary">Book a discovery call</a>
-            <a href="#projects" class="text-sm text-brand-muted hover:text-brand-text transition-colors inline-flex items-center gap-2 self-center">
-              View work <span aria-hidden="true">→</span>
-            </a>
+            <a href="#contact" class="btn-primary">Get in touch</a>
             <a href="/resume.pdf" class="text-sm text-brand-muted hover:text-brand-text transition-colors inline-flex items-center gap-2 self-center" download>
               Download resume (PDF) <span aria-hidden="true">↓</span>
+            </a>
+            <a href="#projects" class="text-sm text-brand-muted hover:text-brand-text transition-colors inline-flex items-center gap-2 self-center">
+              View work <span aria-hidden="true">→</span>
             </a>
           </div>
         </ScrollReveal>
@@ -148,7 +142,6 @@ const jsonLd = {
         <p class="eyebrow mb-6">Experience</p>
         <Timeline title="" items={experience} />
         <p class="text-xs text-brand-muted mt-6">Legend: TPH = transactions per hour; AHT = average handle time; CSAT = customer satisfaction; NPS = net promoter score.</p>
-        <p class="text-xs text-brand-muted mt-2">TODO: confirm exact dates for the Quality Analyst / Digital Content Specialist overlap at Wipro.</p>
       </div>
     </div>
   </section>
@@ -191,51 +184,32 @@ const jsonLd = {
     </div>
   </section>
 
-  <!-- Services -->
-  <section id="services" class="section border-t border-brand-border" aria-labelledby="services-heading">
+  <!-- Focus areas -->
+  <section id="focus" class="section border-t border-brand-border" aria-labelledby="focus-heading">
     <div class="container-custom">
       <div class="grid md:grid-cols-[240px_1fr] gap-8 md:gap-16 mb-12">
         <div>
-          <p class="eyebrow mb-3">03 — Services</p>
-          <h2 id="services-heading" class="font-display text-3xl sm:text-4xl font-medium text-brand-text">How I help</h2>
+          <p class="eyebrow mb-3">03 — Focus</p>
+          <h2 id="focus-heading" class="font-display text-3xl sm:text-4xl font-medium text-brand-text">What I do</h2>
         </div>
-        <p class="text-brand-muted max-w-xl self-end">Four engagement areas for early-stage startups building Trust & Safety operations.</p>
+        <p class="text-brand-muted max-w-xl self-end">Areas where I have direct, hands-on experience.</p>
       </div>
       <div class="border-t border-brand-border">
-        {services.map((svc, i) => (
+        {focusAreas.map((area, i) => (
           <div class="grid md:grid-cols-[80px_1fr_2fr] gap-6 md:gap-10 py-8 border-b border-brand-border items-start">
             <p class="font-mono text-sm text-brand-muted">{String(i + 1).padStart(2, '0')}</p>
             <div>
-              <h3 class="font-display text-xl font-medium text-brand-text mb-2">{svc.title}</h3>
-              <p class="text-sm text-brand-muted mb-3">{svc.description}</p>
-              <p class="text-xs text-brand-muted">Typical engagement: {svc.engagement}</p>
+              <h3 class="font-display text-xl font-medium text-brand-text mb-2">{area.title}</h3>
+              <p class="text-sm text-brand-muted mb-3">{area.description}</p>
             </div>
             <div>
-              <p class="eyebrow mb-3">What you get</p>
+              <p class="eyebrow mb-3">Details</p>
               <ul class="space-y-1">
-                {svc.bullets.map(b => <li class="text-sm text-brand-muted leading-relaxed">{b}</li>)}
+                {area.bullets.map(b => <li class="text-sm text-brand-muted leading-relaxed">{b}</li>)}
               </ul>
             </div>
           </div>
         ))}
-      </div>
-
-      <div class="mt-12">
-        <p class="eyebrow mb-4">How we work</p>
-        <div class="grid sm:grid-cols-4 gap-6">
-          {[
-            { step: 'Discover', desc: 'Understand your current operations, metrics, and gaps.' },
-            { step: 'Scope', desc: 'Agree on deliverables, timeline, and success criteria.' },
-            { step: 'Deliver', desc: 'Implement process changes and the tooling to support them.' },
-            { step: 'Handoff', desc: 'Document, train, and transfer ownership so it survives.' },
-          ].map((item, i) => (
-            <div key={item.step}>
-              <p class="font-mono text-sm text-brand-muted mb-2">{String(i + 1).padStart(2, '0')}</p>
-              <p class="font-display text-lg font-medium text-brand-text">{item.step}</p>
-              <p class="text-sm text-brand-muted mt-1">{item.desc}</p>
-            </div>
-          ))}
-        </div>
       </div>
     </div>
   </section>
@@ -246,9 +220,9 @@ const jsonLd = {
       <div class="max-w-2xl mb-12">
         <p class="eyebrow mb-6">04 — Contact</p>
         <h2 id="contact-heading" class="font-display text-5xl sm:text-6xl font-medium text-brand-text leading-tight mb-6">
-          Book a discovery call.
+          Get in touch.
         </h2>
-        <p class="text-brand-muted leading-relaxed">Tell me about your project. I respond within one business day.</p>
+        <p class="text-brand-muted leading-relaxed">Interested in my background or want to connect about a Trust & Safety role? Send a note — I respond within one business day.</p>
       </div>
 
       <div class="grid lg:grid-cols-2 gap-16 border-t border-brand-border pt-12">
@@ -266,19 +240,18 @@ const jsonLd = {
             <input type="email" id="email" name="email" required class="w-full rounded-md border border-brand-border bg-brand-bg px-4 py-3 text-brand-text placeholder-brand-muted focus:outline-none focus:ring-2 focus:ring-brand-accent focus:border-transparent" placeholder="you@example.com" />
           </div>
           <div>
-            <label for="service" class="block text-sm font-medium text-brand-text mb-1">Service interest</label>
+            <label for="topic" class="block text-sm font-medium text-brand-text mb-1">Topic</label>
             <select id="service" name="service" required class="w-full rounded-md border border-brand-border bg-brand-bg px-4 py-3 text-brand-text focus:outline-none focus:ring-2 focus:ring-brand-accent focus:border-transparent">
               <option value="">Select...</option>
-              <option value="trust-safety">Trust & Safety Foundations</option>
-              <option value="support-qa">Support Operations & QA</option>
-              <option value="ai-automation">AI Automation & Tooling</option>
-              <option value="fractional-qa">Fractional QA Lead</option>
+              <option value="job-opportunity">Trust & Safety job opportunity</option>
+              <option value="recruiter">Recruiter / hiring inquiry</option>
+              <option value="ai-training">AI training / RLHF / red teaming</option>
               <option value="other">Other</option>
             </select>
           </div>
           <div>
             <label for="message" class="block text-sm font-medium text-brand-text mb-1">Message</label>
-            <textarea id="message" name="message" rows="5" required class="w-full rounded-md border border-brand-border bg-brand-bg px-4 py-3 text-brand-text placeholder-brand-muted focus:outline-none focus:ring-2 focus:ring-brand-accent focus:border-transparent resize-y" placeholder="Tell me about your project..."></textarea>
+            <textarea id="message" name="message" rows="5" required class="w-full rounded-md border border-brand-border bg-brand-bg px-4 py-3 text-brand-text placeholder-brand-muted focus:outline-none focus:ring-2 focus:ring-brand-accent focus:border-transparent resize-y" placeholder="Tell me about the role or opportunity..."></textarea>
           </div>
           <button type="submit" class="btn-primary" id="submit-btn">Send message</button>
         </form>
@@ -313,7 +286,7 @@ const jsonLd = {
           </div>
           <div class="border-t border-brand-border pt-6">
             <p class="eyebrow mb-3">Availability</p>
-            <p class="text-sm text-brand-muted leading-relaxed">Currently accepting new consulting engagements. Based in the Philippines (UTC+8), available for async and sync collaboration across US, EU, and APAC time zones.</p>
+            <p class="text-sm text-brand-muted leading-relaxed">Open to full-time Trust & Safety roles. Based in the Philippines (UTC+8), available for on-site, hybrid, and remote roles across US, EU, and APAC time zones.</p>
           </div>
         </div>
       </div>

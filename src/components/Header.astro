@@ -4,8 +4,8 @@ const onProject = Astro.url.pathname.startsWith('/projects');
 const home = onProject ? '/' : '';
 const navLinks = [
   { href: `${home}#about`, label: 'About' },
-  { href: `${home}#projects`, label: 'Work' },
-  { href: `${home}#services`, label: 'Services' },
+  { href: `${home}#projects`, label: 'Projects' },
+  { href: `${home}#focus`, label: 'Focus' },
   { href: `${home}#contact`, label: 'Contact' },
 ];
 ---
@@ -20,7 +20,7 @@ const navLinks = [
           <a href={link.href} class="text-sm text-brand-muted hover:text-brand-text transition-colors">{link.label}</a>
         ))}
         <a href={`${home}#contact`} class="text-sm font-medium text-brand-accent hover:text-brand-accent-hover transition-colors">
-          Book a call →
+          Get in touch →
         </a>
       </div>
       <button
@@ -38,7 +38,7 @@ const navLinks = [
         {navLinks.map(link => (
           <a href={link.href} class="block py-3 text-sm text-brand-muted hover:text-brand-text transition-colors" role="menuitem">{link.label}</a>
         ))}
-        <a href={`${home}#contact`} class="block py-3 text-sm font-medium text-brand-accent" role="menuitem">Book a call →</a>
+        <a href={`${home}#contact`} class="block py-3 text-sm font-medium text-brand-accent" role="menuitem">Get in touch →</a>
       </div>
     </div>
   </nav>
